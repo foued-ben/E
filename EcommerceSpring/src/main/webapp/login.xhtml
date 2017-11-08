@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:p="http://primefaces.org/ui">
+
+
+<h:head>
+	<title>Page Login</title>
+</h:head>
+
+<h:body>
+
+	<h:form>
+		Identifiant : <h:inputText value="#{adminMB.administrateur.identifiant}"></h:inputText>
+		Mot de passe : <h:inputText value="#{adminMB.administrateur.mdp}"></h:inputText>
+		<h:commandButton value="Se connecter" action="#{adminMB.connexion}"></h:commandButton>
+	</h:form>
+
+
+
+
+
+
+
+
+</h:body>
+</html>
