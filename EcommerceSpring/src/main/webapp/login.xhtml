@@ -6,24 +6,58 @@
 	xmlns:f="http://java.sun.com/jsf/core"
 	xmlns:p="http://primefaces.org/ui">
 
-
 <h:head>
-	<title>Page Login</title>
+	<title>Login</title>
 </h:head>
 
-<h:body>
+<h:body style="background-image :   url(images/nuitfond.jpg); ">
+
+	<h:outputStylesheet library="css" name="style.css" />
+	<div class="container">
+		<img width="1350" height="500" src="images/disneyland1.jpg" />
+		<div class="caption">
+			<h1 style="color: gold;">Disney Store</h1>
+		</div>
+		<div id="click">
+			<h2 style="color: white;">Pour acceder au site clique ici</h2>
+		</div>
+		<h:form>
+			<div style="color: white">
+				<h:panelGrid columns="2">
+			Je suis administrateur 
+			<p:separator />
+	
+			Identification : <br />
+					<h:inputText value="#{adminMB.administrateur.identifiant}" />
+					<br />
+			Mot de passe : <br />
+					<h:inputText value="#{adminMB.administrateur.mdp}" />
+					<br />
+
+					<h:commandButton value="Se connecter" action="#{adminMB.seConnecter}" />
+				</h:panelGrid>
+			</div>
+		</h:form>
+
+	</div>
+
+	<!-- 	<p:graphicImage value="/images/dossier.png" stream="false" /> -->
+	<IMG class="superposebis" id="img_2" src="images/Aladdin.png"
+		width="100" height="100" />
+
+
+	<h:messages style="color:red"></h:messages>
 
 	<h:form>
-		Identifiant : <h:inputText value="#{adminMB.administrateur.identifiant}"></h:inputText>
-		Mot de passe : <h:inputText value="#{adminMB.administrateur.mdp}"></h:inputText>
-		<h:commandButton value="Se connecter" action="#{adminMB.connexion}"></h:commandButton>
+		<p:commandLink action="#{cliMB.instancierPanierDansSession}">
+			<!-- 			<h:outputText value="Client" /> -->
+			<IMG class="superpose" id="img_1" src="images/Mickey.png" width="200"
+				height="200" />
+		</p:commandLink>
+
 	</h:form>
-
-
-<p:growl></p:growl>
-
-
-
-
 </h:body>
+
+
+
 </html>

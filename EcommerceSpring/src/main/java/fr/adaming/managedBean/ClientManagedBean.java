@@ -20,7 +20,7 @@ import fr.adaming.service.IProduitService;
 import fr.adaming.service.IServiceCategorie;
 
 
-@ManagedBean(name = "cMB")
+@ManagedBean(name = "cliMB")
 @RequestScoped
 public class ClientManagedBean implements Serializable {
 

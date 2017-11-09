@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:p="http://primefaces.org/ui">
+
+<h:head>
+	<title>Accueil</title>
+</h:head>
+
+<h:body style="background-image :   url(images/nuitfond.jpg); ">
+
+	<h:outputStylesheet library="css" name="style.css" />
+	<div class="container">
+		<img width="1350" height="400" src="images/disneyland1.jpg" />
+		<div class="caption">
+			<h1 style="color: gold;">Disney Store</h1>
+		</div>
+		<div id="aladdin">
+			<h2 style="color: white;">Survoler les catégories avec Aladdin ?</h2>
+			
+		</div>
+	
+		<div id="elsa">
+			<h2 style="color: white;">Accéder directement aux produit avec Elsa ?</h2>
+		</div>
+		
+		<div id="simba">
+			<h2 style="color: white;">Aller au panier avec Simba ?</h2>
+		</div>
+	</div>
+
+<h:form>
+		<p:breadCrumb>
+		<p:menuitem value="Accueil" url="accueilclient.xhtml" />
+		<p:menuitem value="Catégories"  action="#{cliMB.afficherCategories}" url="categorie.xhtml"  />
+		<p:menuitem value="Produits" action="#{cliMB.afficherProduits}" url="produitclient.xhtml" />
+		<p:menuitem value="Mon panier" url="panierclient.xhtml" />
+	</p:breadCrumb>
+	</h:form>
+	<p:separator />
+	<p:spacer height="20px" />
+	
+	
+	<h:form>
+		<p:commandLink action="#{cliMB.afficherCategories}">
+		
+			<!-- 			<h:outputText value="Client" /> -->
+			<IMG class="superpose" id="img_3" src="images/AladdinTapis.png" width="300"
+				height="200" />
+		</p:commandLink>
+
+	</h:form>
+
+	
+	<h:form>
+		<p:commandLink action="#{cliMB.afficherProduits}">
+			<!-- 			<h:outputText value="Client" /> -->
+			<IMG class="superpose" id="img_4" src="images/Elsa.png" width="200"
+				height="200" />
+		</p:commandLink>
+
+	</h:form>
+	
+		<h:form>
+		<p:commandLink>
+			<!-- 			<h:outputText value="Client" /> -->
+			<IMG class="superpose" id="img_5" src="images/Simba.png" width="350"
+				height="200" />
+		</p:commandLink>
+
+	</h:form>
+
+</h:body>
+
+
+
+</html>
