@@ -10,11 +10,11 @@
 	<title>Login</title>
 </h:head>
 
-<h:body style="background-image :   url(/nuitfond.jpg); ">
+<h:body style="background-image :   url(resources/nuitfond.jpg); ">
 
-	<h:outputStylesheet library="css" name="style.css" />
+	<h:outputStylesheet  library="css" name="style.css" />
 	<div class="container">
-		<img width="1350" height="500" src="/disneyland1.jpg" />
+		<img width="1350" height="500" src="resources/disneyland1.jpg" />
 		<div class="caption">
 			<h1 style="color: gold;">Disney Store</h1>
 		</div>
@@ -42,15 +42,18 @@
 	</div>
 
 	<!-- 	<p:graphicImage value="/images/dossier.png" stream="false" /> -->
-<p:graphicImage name="/Aladdin.png"></p:graphicImage>
+	<IMG class="superposebis" id="img_2" src="resources/Aladdin.png"
+		width="100" height="100" />
 
 	<h:messages style="color:red"></h:messages>
 
 	<h:form>
 		<p:commandLink action="#{cliMB.instancierPanierDansSession}">
 			<!-- 			<h:outputText value="Client" /> -->
-			<IMG class="superpose" id="img_1" src="/Mickey.png" width="200"
+			<IMG class="superpose" id="img_1" src="resources/Mickey.png" width="200"
 				height="200" />
+			
+			
 		</p:commandLink>
 
 	</h:form>

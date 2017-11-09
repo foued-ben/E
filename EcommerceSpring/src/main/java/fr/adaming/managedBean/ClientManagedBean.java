@@ -30,8 +30,8 @@ public class ClientManagedBean implements Serializable {
 	@ManagedProperty(value = "#{catService}")
 	private IServiceCategorie categorieService;
 	
-	@ManagedProperty(value = "#{cService}")
-	private IProduitService produitService;
+//	@ManagedProperty(value = "#{prodService}")
+//	private IProduitService produitService;
 	
 	
 	private Client client;
@@ -55,9 +55,9 @@ public class ClientManagedBean implements Serializable {
 	}
 
 
-	public void setProduitService(IProduitService produitService) {
-		this.produitService = produitService;
-	}
+//	public void setProduitService(IProduitService produitService) {
+//		this.produitService = produitService;
+//	}
 
 
 	public void setClientService(IClientService clientService) {
@@ -227,7 +227,7 @@ public class ClientManagedBean implements Serializable {
 		maSession.setAttribute("listeProduits", listeProduits);
 		System.out.println("La liste des produits est" + listeProduits);
 
-		return "accueilclient";
+		return "accueilClient";
 	}
 	
 }

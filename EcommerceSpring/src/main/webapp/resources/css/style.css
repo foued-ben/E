@@ -1,0 +1,144 @@
+#parent {
+    position: relative;
+}
+img.superpose {
+    position: absolute;
+    top: 25px;
+    left: 0px;
+}
+
+img.superposebis {
+    position: absolute;
+    top: 25px;
+    left: 30px;
+}
+#img_1 {
+    z-index: 10;
+    left : 860px ; 
+    bottom: 0px ; 
+    top : 300px;
+}
+#img_2 {
+    z-index: 11;
+    left : 740px ; 
+    bottom: 160px ; 
+    top : 400px;
+}
+
+#img_3 {
+    z-index: 11;
+    left : 100px ; 
+    bottom: 320px ; 
+    top : 150px;
+}
+
+#img_4 {
+    z-index: 11;
+    left : 590px ; 
+    bottom: 310px ; 
+    top : 150px;
+}
+
+#img_5 {
+    z-index: 11;
+    left : 1040px ; 
+    bottom: 310px ; 
+    top : 150px;
+}
+
+.container {
+    position: relative; 
+
+}
+
+.body{
+	width: 1200px; 
+	height: 800px; 
+	
+}
+
+.container .caption {
+    position: absolute;
+    bottom: 500px;
+    left: 400px;
+}
+
+#click {
+    position: absolute;
+    bottom: 120px;
+    left: 400px;
+}
+
+#aladdin {
+    position: absolute;
+    bottom: 20px;
+    left: 20px;
+}
+
+
+#elsa {
+    position: absolute;
+    bottom: 20px;
+    left: 500px;
+}
+
+#simba {
+    position: absolute;
+    bottom: 20px;
+    left: 1000px;
+}
+
+#rafiki {
+    position: absolute;
+    bottom: 20px;
+    left: 20px;
+    top: 150px;
+}
+
+
+#timon {
+    position: absolute;
+    bottom: 20px;
+    left: 400px;
+    top: 170px;
+}
+
+#pumba {
+    position: absolute;
+    bottom: 200px;
+    left: 800px;
+    top: 250px; 
+}
+
+#img_simba {
+    position: absolute;
+    bottom: 20px;
+    left: 1000px;
+    top: 150px; 
+}
+
+#img_aladdin {
+    position: absolute;
+    bottom: 20px;
+    left: 400px;
+    top: 50px;
+}
+
+#img_rdn {
+    position: absolute;
+    bottom: 20px;
+    left: 200px;
+    top: 50px;
+}
+
+#img_elsa {
+    position: absolute;
+    bottom: 0px;
+    left: 1000px;
+    top: 100px;
+}
+.container .captionlog {
+    position: absolute;
+    bottom: 20px;
+    left: 400px;
+}
