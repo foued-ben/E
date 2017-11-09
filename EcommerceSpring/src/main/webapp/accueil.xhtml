@@ -12,7 +12,9 @@
 </h:head>
 
 <h:body>
-
+<h:form>
+<h:commandButton value="Se déconnecter" action="#{adminMB.deconnexion}" update="@all"></h:commandButton>
+</h:form>
 	<h1 style="text-align: center; color: gold">Liste des produits</h1>
 	<p:separator></p:separator>
 
@@ -47,7 +49,7 @@
 		</p:column>
 
 		<p:column headerText="Illustration" >
-			<p:graphicImage name="/#{produit.image}" />
+			<p:graphicImage name="/#{produit.image}" width="175px"/>
 
 
 		</p:column>

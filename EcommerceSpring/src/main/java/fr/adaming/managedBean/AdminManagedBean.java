@@ -96,4 +96,11 @@ public class AdminManagedBean {
 		}
 	}
 	
+	public String deconnexion(){
+		FacesContext.getCurrentInstance().getExternalContext().invalidateSession();
+		
+		return "login";
+		
+	}
+	
 }
