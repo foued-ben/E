@@ -17,7 +17,7 @@
 	<p:separator></p:separator>
 
 
-	<p:dataTable var="produit" value="#{sessionScope.listeProduits}">
+	<p:dataTable var="produit" value="#{sessionScope.listeProduits}" columnClasses="ui-grid-col-0,ui-grid-col-5" styleClass="ui-panelgrid-blank">
 		<p:column headerText="Id">
 			<h:outputText value="#{produit.idProduit}" />
 		</p:column>
@@ -46,14 +46,20 @@
 
 		</p:column>
 
+		<p:column headerText="Illustration" >
+			<p:graphicImage name="/Monopoly.png" />
+
+
+		</p:column>
+
 
 	</p:dataTable>
 
 
 
 
-	<h1 style="text-align: center; position: relative; color:gold">Liste des
-		catégories</h1>
+	<h1 style="text-align: center; position: relative; color: gold">Liste
+		des catégories</h1>
 	<p:separator></p:separator>
 
 	<p:dataTable var="categorie" value="#{sessionScope.listeCategories}">

@@ -7,7 +7,6 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import fr.adaming.dao.IClientDao;
-import fr.adaming.dao.IEtudiantDao;
 import fr.adaming.modele.Categorie;
 import fr.adaming.modele.Client;
 import fr.adaming.modele.Commande;
@@ -20,13 +19,13 @@ import fr.adaming.modele.Produit;
 public class ClientServiceImpl implements IClientService {
 
 	@Autowired
-	private IClientDao clientDao ; 
+
 	
 	
 	
 	@Override
 	public List<Categorie> getAllCategories() {
-		return clientDao.getAllCategories();
+		return null;
 	}
 
 	@Override

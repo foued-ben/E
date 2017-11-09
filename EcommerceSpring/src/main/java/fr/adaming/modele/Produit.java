@@ -23,6 +23,7 @@ public class Produit {
 	private String description;
 	private double prix;
 	private int quantite;
+	private String image;
 	@Column(columnDefinition="TINYINT(1)")
 	private boolean selectionne;
 	
@@ -41,15 +42,21 @@ public class Produit {
 	public Produit() {
 		super();
 	}
-	public Produit(String designation, String description, double prix, int quantite, boolean selectionne) {
+
+	
+
+	public Produit(String designation, String description, double prix, int quantite, String image,
+			boolean selectionne) {
 		super();
 		this.designation = designation;
 		this.description = description;
 		this.prix = prix;
 		this.quantite = quantite;
+		this.image = image;
 		this.selectionne = selectionne;
 	}
-	public Produit(int idProduit, String designation, String description, double prix, int quantite,
+
+	public Produit(int idProduit, String designation, String description, double prix, int quantite, String image,
 			boolean selectionne) {
 		super();
 		this.idProduit = idProduit;
@@ -57,8 +64,12 @@ public class Produit {
 		this.description = description;
 		this.prix = prix;
 		this.quantite = quantite;
+		this.image = image;
 		this.selectionne = selectionne;
 	}
+
+
+
 	// Getters/Setters
 	public int getIdProduit() {
 		return idProduit;
@@ -108,7 +119,22 @@ public class Produit {
 	public void setListeLigneCommande(List<LigneCommande> listeLigneCommande) {
 		this.listeLigneCommande = listeLigneCommande;
 	}
+	
+
+	public String getImage() {
+		return image;
+	}
+	
 	// toString
+
+
+
+
+
+	public void setImage(String image) {
+		this.image = image;
+	}
+
 
 
 	@Override

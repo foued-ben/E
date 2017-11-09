@@ -80,19 +80,16 @@ public class AdminManagedBean {
 		// On appelle la méthode de service
 		Administrateur administrateurConnexion =  serviceAdmin.connexionAdmin(this.administrateur);
 		if(administrateurConnexion!=null){
-			System.out.println("Connexion");
 			//On ajoute l'agent à la session
 			FacesContext.getCurrentInstance().getExternalContext().getSessionMap().put("sessionAgent", administrateurConnexion);
 			//On liste l'ensemble des produits et des catégories
 			listeProduit = serviceProduit.listerProduits();
 			List<Categorie> listeCategorie = serviceCategorie.listerCategorie();
-			//On ajoute la liste des produits à la session
+			//On ajoute la liste des produits et la liste des catégories à la session
 			FacesContext.getCurrentInstance().getExternalContext().getSessionMap().put("listeProduits", listeProduit);
 			FacesContext.getCurrentInstance().getExternalContext().getSessionMap().put("listeCategories", listeCategorie);
-			System.out.println(listeProduit);
 			return "accueil";
 		}else {
-			System.out.println("Connexion impossible. Le mot de passe ou l'identifiant est erroné");
 			//On affiche un message pour indiquer le problème
 			FacesContext.getCurrentInstance().addMessage(null, new FacesMessage("Connexion impossible. Le mot de passe et/ou l'identifiant est(sont) erroné(s)"));
 			return "login";
