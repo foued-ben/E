@@ -30,7 +30,7 @@ public class AdminDaoImpl implements IAdminDao{
 		Query query = session.createQuery(req);
 		//Passage des paramètres.
 		query.setParameter("pIdentifiant", administrateur.getIdentifiant());
-		query.setParameter("p:MdP", administrateur.getMdp());
+		query.setParameter("pMdP", administrateur.getMdp());
 		//Exécution de la requête
 		Administrateur administrateurRecup = (Administrateur) query.uniqueResult();
 		
