@@ -4,9 +4,11 @@ import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 
+import javax.annotation.PostConstruct;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.ManagedProperty;
 import javax.faces.bean.RequestScoped;
+import javax.faces.context.FacesContext;
 import javax.servlet.http.HttpSession;
 
 import fr.adaming.modele.Administrateur;
@@ -50,6 +52,39 @@ public class ClientManagedBean implements Serializable {
 	private LigneCommande ligneCommande;
 	private Panier panier;
 	private int id;
+
+	
+	
+	
+	public ClientManagedBean() {
+		// instancier le client pour éviter l'exception target unreachble
+		this.client = new Client();
+		this.categorie = new Categorie();
+		this.produitDemande = new Produit();
+		this.listeCategories = new ArrayList<Categorie>();
+		this.listeProduits = new ArrayList<Produit>();
+		this.listeProduitsByMot = new ArrayList<Produit>();
+
+		this.ligneCommande = new LigneCommande();
+	}
+
+	@PostConstruct
+	public void init() {
+		this.maSession = (HttpSession) FacesContext.getCurrentInstance().getExternalContext().getSession(false);
+		// récup context
+		//FacesContext context = FacesContext.getCurrentInstance();
+		// récup session
+		//this.maSession = (HttpSession) context.getExternalContext().getSession(false);
+		System.out.println("La session est" +maSession);
+		// recuperation e l'agent à partir de la session
+		this.admin = (Administrateur) maSession.getAttribute("adminSession");
+
+		this.listeCategories = clientService.getAllCategories();
+		this.listeProduits = clientService.getAllProduits();
+		// this.listeProduits = new ArrayList<>();
+	}
+	
+	
 
 	public void setCategorieService(IServiceCategorie categorieService) {
 		this.categorieService = categorieService;
@@ -218,13 +253,17 @@ public class ClientManagedBean implements Serializable {
 		panierSession.setListeLignesCommande(listeCommande);
 		System.out.println("Liste ajoutée");
 		// Ajouter le panier à la session
-		maSession.setAttribute("panierSession", panierSession);
+		System.out.println(maSession);
+		System.out.println(this.admin);
+		//maSession.setAttribute("panierSession", panierSession);
+		FacesContext.getCurrentInstance().getExternalContext().getSessionMap().put("panierSession", panierSession);
 		System.out.println("Panier ajouté");
 
 		// On créer la liste de produit contenant tous les produits.
 		List<Produit> listeTousProduits = produitService.listerProduits();
 		// On ajoute la liste à la session
 		this.listeProduits = listeTousProduits;
+		
 		maSession.setAttribute("listeProduits", listeProduits);
 		System.out.println("La liste des produits est" + listeProduits);
 
