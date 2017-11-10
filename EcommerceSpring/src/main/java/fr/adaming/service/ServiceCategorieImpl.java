@@ -27,6 +27,19 @@ public class ServiceCategorieImpl implements IServiceCategorie{
 				
 	}
 
+
+	@Override
+	public Categorie ajouterCategorie(Categorie categorie) {
+		return daoCategorie.ajouterCategorie(categorie);
+	}
+
+
+	@Override
+	public Categorie rechercherCategorieParId(Categorie categorie) {
+		// TODO Auto-generated method stub
+		return daoCategorie.rechercherCategorieParId(categorie);
+	}
+
 	
 	
 }
