@@ -55,4 +55,37 @@ public class CategorieDaoImpl implements ICategorieDao{
 		return categorieCherche;
 	}
 
+	@Override
+	public void supprimerCategorie(Categorie categorie) {
+		Session session =sessionFactory.getCurrentSession();
+		String req = "FROM Categorie cat WHERE cat.idCategorie=:pIDCategorie";
+		Query query = session.createQuery(req);
+		
+		//Passage de paramètre 
+		query.setParameter("pIDCategorie", categorie.getIdCategorie());
+		Categorie categorieCherche = (Categorie) query.uniqueResult();
+
+		session.delete(categorieCherche);
+		
+	}
+
+	@Override
+	public Categorie modifierCategorie(Categorie categorie) {
+		Session session =sessionFactory.getCurrentSession();
+		String req = "FROM Categorie cat WHERE cat.idCategorie=:pIDCategorie";
+		Query query = session.createQuery(req);
+		
+		//Passage de paramètre 
+		query.setParameter("pIDCategorie", categorie.getIdCategorie());
+		Categorie categorieCherche = (Categorie) query.uniqueResult();
+		
+		//Remplacement des attributs
+		categorieCherche.setDescription(categorie.getDescription());
+		categorieCherche.setNomCategorie(categorie.getNomCategorie());
+
+		//On merge
+		session.saveOrUpdate(categorieCherche);
+		return categorieCherche;
+	}
+
 }

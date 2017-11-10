@@ -11,5 +11,9 @@ public interface ICategorieDao {
 	public Categorie ajouterCategorie(Categorie categorie);
 	
 	public Categorie rechercherCategorieParId(Categorie categorie);
+	
+	public void supprimerCategorie(Categorie categorie);
+	
+	public Categorie modifierCategorie(Categorie categorie);
 }
 

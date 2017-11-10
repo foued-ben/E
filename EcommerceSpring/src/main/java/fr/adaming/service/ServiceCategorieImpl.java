@@ -40,6 +40,18 @@ public class ServiceCategorieImpl implements IServiceCategorie{
 		return daoCategorie.rechercherCategorieParId(categorie);
 	}
 
+
+	@Override
+	public void supprimerCategorie(Categorie categorie) {
+		daoCategorie.supprimerCategorie(categorie);
+	}
+
+
+	@Override
+	public Categorie modifierCategorie(Categorie categorie) {
+		return daoCategorie.modifierCategorie(categorie);
+	}
+
 	
 	
 }

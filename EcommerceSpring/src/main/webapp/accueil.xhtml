@@ -55,7 +55,7 @@
 		</p:column>
 
 		<p:column headerText="Illustration">
-			<p:graphicImage name="/#{produit.image}" width="175px" />
+			<p:graphicImage name="/#{produit.image}" width="150px" />
 
 
 		</p:column>
@@ -93,6 +93,16 @@
 			<h:outputText value="#{categorie.description}" />
 		</p:column>
 
+		<p:column headerText="Supprimer la catégorie">
+			<h:form>
+
+				<h:commandButton value="Supprimer"
+					action="#{categorieMB.supprimerCategorie}">
+					<f:setPropertyActionListener value="#{categorie.idCategorie}"
+						target="#{categorieMB.categorie.idCategorie}"></f:setPropertyActionListener>
+				</h:commandButton>
+			</h:form>
+		</p:column>
 
 	</p:dataTable>
 
@@ -115,7 +125,8 @@
 
 		<p:selectOneListbox value="#{produitMB.produit.image}">
 			<f:selectItem itemLabel="Monopoly" itemValue="Monopoly.png" />
-			<f:selectItem itemLabel="Petits Chevaux" itemValue="PetitsChevaux.png" />
+			<f:selectItem itemLabel="Petits Chevaux"
+				itemValue="PetitsChevaux.png" />
 			<f:selectItem itemLabel="Elsa" itemValue="Elsa.png" />
 		</p:selectOneListbox>
 
@@ -124,23 +135,26 @@
 			action="#{produitMB.modifierProduit}"></h:commandButton>
 	</h:form>
 
-	<h1 style="text-align: center; position: relative; color: gold">Ajouter une catégorie</h1>
+	<h1 style="text-align: center; position: relative; color: gold">Ajouter
+		une catégorie</h1>
 	<h:form>
 					Description de la catégorie: <p:inputText
-					value="#{categorieMB.categorie.description}" required="true"/>
+			value="#{categorieMB.categorie.description}" required="true" />
 
 			Nom de la catégorie: <p:inputText
-					value="#{categorieMB.categorie.nomCategorie}" required="true"/>
-					<h:commandButton value="Ajouter la catégorie"
-				action="#{categorieMB.ajouterCategorie}" />
-		
-	
+			value="#{categorieMB.categorie.nomCategorie}" required="true" />
+		<h:commandButton value="Ajouter la catégorie"
+			action="#{categorieMB.ajouterCategorie}" />
+
+
 	</h:form>
-	<h1 style="text-align: center; position: relative; color: gold">Rechercher une catégorie</h1>
+	<h1 style="text-align: center; position: relative; color: gold">Rechercher
+		une catégorie</h1>
 	<h:form>
 		<h:inputText value="#{categorieMB.categorie.idCategorie}"></h:inputText>
-	
-		<h:commandButton value="Rechercher" action="#{categorieMB.rechercheCategorieParId}"></h:commandButton>
+
+		<h:commandButton value="Rechercher"
+			action="#{categorieMB.rechercheCategorieParId}"></h:commandButton>
 	</h:form>
 
 	<p:dataTable var="categorie" value="#{categorieMB.categorie}">
@@ -159,7 +173,16 @@
 
 	</p:dataTable>
 
+	<h1 style="text-align: center; position: relative; color: gold">Modifier une catégorie</h1>
+		<h:form>
+		ID : <h:inputText value="#{categorieMB.categorie.idCategorie}"></h:inputText>
+		Description : <h:inputText value="#{categorieMB.categorie.description}"></h:inputText>
+		Designation : <h:inputText value="#{categorieMB.categorie.nomCategorie}"></h:inputText>
 
+		<h:commandButton value="Modifier"
+			action="#{categorieMB.modifierCategorie}"></h:commandButton>
+	</h:form>
+	
 
 </h:body>
 </html>

@@ -9,18 +9,18 @@ import javax.faces.context.FacesContext;
 import fr.adaming.modele.Categorie;
 import fr.adaming.service.IServiceCategorie;
 
-@ManagedBean(name="categorieMB")
+@ManagedBean(name = "categorieMB")
 public class CategorieManagedBean {
 
 	private Categorie categorie;
 
-	@ManagedProperty(value="#{categorieService}")
+	@ManagedProperty(value = "#{categorieService}")
 	private IServiceCategorie serviceCategorie;
 
 	public CategorieManagedBean() {
 		this.categorie = new Categorie();
 	}
-	//
+	
 
 	public Categorie getCategorie() {
 		return categorie;
@@ -30,7 +30,7 @@ public class CategorieManagedBean {
 		this.categorie = categorie;
 	}
 
-	//Pour l'injection
+	// Pour l'injection
 	public IServiceCategorie getServiceCategorie() {
 		return serviceCategorie;
 	}
@@ -38,29 +38,53 @@ public class CategorieManagedBean {
 	public void setServiceCategorie(IServiceCategorie serviceCategorie) {
 		this.serviceCategorie = serviceCategorie;
 	}
-	
 
-	
-	public String ajouterCategorie(){
-		//Appel de la méthode
+	// Méthodes propres
+
+	public String ajouterCategorie() {
+		// Appel de la méthode
 		Categorie categorieAjout = serviceCategorie.ajouterCategorie(this.categorie);
-		if(categorieAjout!=null){
+		if (categorieAjout != null) {
 			// On récupère la liste des catégories
 			List<Categorie> listeCategorie = serviceCategorie.listerCategorie();
-			//On ajoute la liste dans la session
-			FacesContext.getCurrentInstance().getExternalContext().getSessionMap().put("listeCategories", listeCategorie);
+			// On ajoute la liste dans la session
+			FacesContext.getCurrentInstance().getExternalContext().getSessionMap().put("listeCategories",
+					listeCategorie);
 		}
 		return "accueil";
 	}
-	
-	//Méthodes propres
-	public String rechercheCategorieParId(){
-		//Appelle de la méthode de recherche
+
+	public String rechercheCategorieParId() {
+		// Appelle de la méthode de recherche
 		Categorie categorieCherche = serviceCategorie.rechercherCategorieParId(this.categorie);
-		if(categorieCherche!=null){
+		if (categorieCherche != null) {
 			this.categorie = categorieCherche;
 		}
 		return "accueil";
 	}
+
+	public String supprimerCategorie() {
+		// Appel de la méthode
+		serviceCategorie.supprimerCategorie(categorie);
+		// On récupère la liste des catégories
+		List<Categorie> listeCategorie = serviceCategorie.listerCategorie();
+		// On ajoute la liste dans la session
+		FacesContext.getCurrentInstance().getExternalContext().getSessionMap().put("listeCategories",
+				listeCategorie);
+
+		return "accueil";
+	}
 	
+	public String modifierCategorie(){
+		Categorie catModif = serviceCategorie.modifierCategorie(this.categorie);
+		if(catModif!=null){
+			// On récupère la liste des catégories
+			List<Categorie> listeCategorie = serviceCategorie.listerCategorie();
+			// On ajoute la liste dans la session
+			FacesContext.getCurrentInstance().getExternalContext().getSessionMap().put("listeCategories",
+					listeCategorie);
+		}
+		return "accueil";
+	}
+
 }
