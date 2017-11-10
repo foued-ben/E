@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:p="http://primefaces.org/ui">
+
+<h:head>
+	<title>categories</title>
+</h:head>
+<h:body style="background-image :   url(images/fond_nuit.jpg); ">
+
+	<h:outputStylesheet library="css" name="style.css" />
+	<div class="container">
+		<img width="1350" height="400" src="images/fond_aladdin.jpg" />
+		<div class="caption">
+			<h1 style="color: gold;">Disney Store</h1>
+		</div>
+	</div>
+
+
+<h:form>
+	<p:breadCrumb>
+		<p:menuitem value="Accueil" url="accueilclient.xhtml" />
+		<p:menuitem value="Catégories" url="categorie.xhtml" update=":listeCat" />
+		<p:menuitem value="Produits" url="produitclient.xhtml" update=":listeProd" />
+		<p:menuitem value="Mon panier" url="panierclient.xhtml" />
+	</p:breadCrumb>
+</h:form>
+<p:separator />
+<p:spacer height="20px" />
+
+
+
+
+
+
+<h1 style="color: gold; text-align: center">Liste des Catégories</h1>
+
+	<p:dataTable var="cat" value="#{cliMB.listeCategories}" id="listeCat">
+		<p:column headerText="Id">
+			<h:outputText value="#{cat.idCategorie}" />
+		</p:column>
+
+		<p:column headerText="Nom">
+			<h:outputText value="#{cat.nomCategorie}" />
+		</p:column>
+
+		<p:column headerText="Description">
+			<h:outputText value="#{cat.description}" />
+		</p:column>
+		
+		<p:column headerText="Vers les produits">
+			<h:form>
+			 <p:commandButton  value="Ouvrir la catégorie" action="#{cliMB.afficherProduitsByCat}"  styleClass="ui-priority-primary" >
+			 	<f:setPropertyActionListener value="#{cat.idCategorie}" target="#{cliMB.categorie.idCategorie}"></f:setPropertyActionListener>
+			 </p:commandButton>
+			</h:form>
+		</p:column>
+		
+	</p:dataTable>
+
+	<p:spacer height="100px" />
+
+		<h:messages style="color:red"></h:messages>
+		
+		<IMG class="superpose" id="img_aladdin" src="images/Persoaladdin.png" width="500"
+				height="300" />
+		
+</h:body>
+</html>

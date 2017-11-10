@@ -5,6 +5,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import javax.annotation.PostConstruct;
+import javax.faces.application.FacesMessage;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.ManagedProperty;
 import javax.faces.bean.RequestScoped;
@@ -269,5 +270,22 @@ public class ClientManagedBean implements Serializable {
 
 		return "accueilClient";
 	}
+	
+	public String afficherCategories() {
+
+		List<Categorie> listeOut = clientService.getAllCategories();
+
+		if (listeOut != null) {
+			this.listeCategories = listeOut;
+
+			maSession.setAttribute("categoriesListe", listeCategories);
+
+			return "categorie";
+		} else {
+			FacesContext.getCurrentInstance().addMessage(null, new FacesMessage("Une erreur s'est produite"));
+			return "accueilclient";
+		}
+	}
+
 	
 }

@@ -1,3 +1,10 @@
+body{
+	background-image :   url(resources/nuitfond.jpg);
+	background-size: cover ;
+	margin: 0 ; 
+	
+}
+
 #parent {
     position: relative;
 }

@@ -19,13 +19,17 @@ import fr.adaming.modele.Produit;
 public class ClientServiceImpl implements IClientService {
 
 	@Autowired
+	private IClientDao clientDao ;
+	
+	
+	
+	public void setClientDao(IClientDao clientDao) {
+		this.clientDao = clientDao;
+	}
 
-	
-	
-	
 	@Override
 	public List<Categorie> getAllCategories() {
-		return null;
+		return clientDao.getAllCategories();
 	}
 
 	@Override
