@@ -27,5 +27,24 @@ public class ProduitServiceImpl implements IProduitService{
 		return daoProduit.listerProduits();
 	}
 
-	
+
+	@Override
+	public Produit rechercherProduitAvecId(Produit produit) {
+		return daoProduit.rechercherProduitAvecId(produit);
+	}
+
+	@Override
+	public Produit ajouterProduit(Produit produit) {
+		return daoProduit.ajouterProduit(produit);
+	}
+
+	public void supprimerProduit(Produit produit){
+		daoProduit.supprimerProduit(produit);
+	}
+
+
+	@Override
+	public Produit modifierProduit(Produit produit) {
+		return daoProduit.modifierProduit(produit);
+	}
 }

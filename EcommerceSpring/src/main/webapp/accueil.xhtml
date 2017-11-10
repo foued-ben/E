@@ -12,14 +12,20 @@
 </h:head>
 
 <h:body>
-<h:form>
-<h:commandButton value="Se déconnecter" action="#{adminMB.deconnexion}" update="@all"></h:commandButton>
-</h:form>
+
+	<h:link value="Gestion des Produits" outcome="gestionproduits.xhtml"></h:link>
+	<h:link value="Recherche" outcome="recherche.xhtml"></h:link>
+
+
+	<h:form>
+		<h:commandButton value="Se déconnecter"
+			action="#{adminMB.deconnexion}" update="@all"></h:commandButton>
+	</h:form>
 	<h1 style="text-align: center; color: gold">Liste des produits</h1>
 	<p:separator></p:separator>
 
 
-	<p:dataTable var="produit" value="#{sessionScope.listeProduits}" columnClasses="ui-grid-col-0,ui-grid-col-5" styleClass="ui-panelgrid-blank">
+	<p:dataTable var="produit" value="#{sessionScope.listeProduits}">
 		<p:column headerText="Id">
 			<h:outputText value="#{produit.idProduit}" />
 		</p:column>
@@ -48,12 +54,22 @@
 
 		</p:column>
 
-		<p:column headerText="Illustration" >
-			<p:graphicImage name="/#{produit.image}" width="175px"/>
+		<p:column headerText="Illustration">
+			<p:graphicImage name="/#{produit.image}" width="175px" />
 
 
 		</p:column>
 
+		<p:column headerText="Supprimer le produit">
+			<h:form>
+				<h:commandButton value="Supprimer le produit"
+					action="#{produitMB.supprimerProduit}">
+					<f:setPropertyActionListener value="#{produit.idProduit}"
+						target="#{produitMB.produit.idProduit}"></f:setPropertyActionListener>
+				</h:commandButton>
+			</h:form>
+
+		</p:column>
 
 	</p:dataTable>
 
@@ -80,8 +96,33 @@
 
 	</p:dataTable>
 
+	<h1 style="text-align: center; position: relative; color: gold">Modifier
+		un produit</h1>
+	<h:form>
+		ID (Produit) :  <p:inputText value="#{produitMB.produit.idProduit}"
+			required="true" />
+						Designation : <p:inputText
+			value="#{produitMB.produit.designation}" required="true" />
+		Description : <p:inputText value="#{produitMB.produit.description}"
+			required="true" />
+		Prix : <p:inputText value="#{produitMB.produit.prix}" required="true" />
+		Stock : <p:inputText value="#{produitMB.produit.quantite}"
+			required="true" />
+		Catégorie (ID) : <p:inputText value="#{produitMB.idCategorie}"
+			required="true" />
+			
+			Image :
+
+		<p:selectOneListbox value="#{produitMB.produit.image}">
+			<f:selectItem itemLabel="Monopoly" itemValue="Monopoly.png" />
+			<f:selectItem itemLabel="Petits Chevaux" itemValue="PetitsChevaux.png" />
+			<f:selectItem itemLabel="Elsa" itemValue="Elsa.png" />
+		</p:selectOneListbox>
 
 
+		<h:commandButton value="Remplacer"
+			action="#{produitMB.modifierProduit}"></h:commandButton>
+	</h:form>
 
 </h:body>
 </html>

@@ -28,4 +28,64 @@ public class ProduitDaoImpl implements IProduitDao{
 		return listeProduits;
 	}
 
+
+	@Override
+	public Produit rechercherProduitAvecId(Produit produit) {
+		Session session = sessionFactory.getCurrentSession();
+		//Requête SQL 
+		String req = "FROM Produit prod WHERE prod.idProduit=:pIdProduit";
+		Query query = session.createQuery(req);
+		//Passage du paramètre
+		query.setParameter("pIdProduit", produit.getIdProduit());
+		Produit produitCherche = (Produit) query.uniqueResult();
+		return produitCherche;
+	}
+
+
+	@Override
+	public Produit ajouterProduit(Produit produit) {
+		Session session = sessionFactory.getCurrentSession();
+		session.save(produit);
+		
+		return produit;
+	}
+
+	
+	public void supprimerProduit(Produit produit){
+		Session session = sessionFactory.getCurrentSession();
+		//Requête SQL 
+		String req = "FROM Produit prod WHERE prod.idProduit=:pIdProduit";
+		Query query = session.createQuery(req);
+		//Passage du paramètre
+		query.setParameter("pIdProduit", produit.getIdProduit());
+		Produit produitCherche = (Produit) query.uniqueResult();
+
+		session.delete(produitCherche);
+	}
+
+
+	@Override
+	public Produit modifierProduit(Produit produit) {
+		Session session = sessionFactory.getCurrentSession();
+		//Requête SQL 
+		String req = "FROM Produit prod WHERE prod.idProduit=:pIdProduit";
+		Query query = session.createQuery(req);
+		//Passage du paramètre
+		query.setParameter("pIdProduit", produit.getIdProduit());
+		Produit produitCherche = (Produit) query.uniqueResult();
+
+		
+		//Remplacement des attributs: 
+		produitCherche.setDescription(produit.getDescription());
+		produitCherche.setDesignation(produit.getDesignation());
+		produitCherche.setIdProduit(produit.getIdProduit());
+		produitCherche.setPrix(produit.getPrix());
+		produitCherche.setQuantite(produit.getQuantite());
+		produitCherche.setImage(produit.getImage());
+		produitCherche.setCategorie(produit.getCategorie());
+		
+		session.saveOrUpdate(produitCherche);
+		
+		return produitCherche;
+	}
 }

@@ -27,11 +27,11 @@ public class ClientManagedBean implements Serializable {
 	@ManagedProperty(value = "#{cService}")
 	private IClientService clientService;
 	
-	@ManagedProperty(value = "#{catService}")
+	@ManagedProperty(value = "#{categorieService}")
 	private IServiceCategorie categorieService;
 	
-//	@ManagedProperty(value = "#{prodService}")
-//	private IProduitService produitService;
+	@ManagedProperty(value = "#{produitService}")
+	private IProduitService produitService;
 	
 	
 	private Client client;

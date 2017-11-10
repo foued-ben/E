@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:p="http://primefaces.org/ui">
+
+
+<h:head>
+	<title>Gestion des produits</title>
+</h:head>
+
+<h:body>
+
+
+
+	<h1 style="text-align: center; position: relative; color: gold">Ajouter
+		un produit</h1>
+
+	<h:form>
+				Designation : <p:inputText value="#{produitMB.produit.designation}"
+			required="true" />
+		Description : <p:inputText value="#{produitMB.produit.description}"
+			required="true" />
+		Prix : <p:inputText value="#{produitMB.produit.prix}" required="true" />
+		Stock : <p:inputText value="#{produitMB.produit.quantite}"
+			required="true" />
+		Catégorie (ID) : <p:inputText value="#{produitMB.idCategorie}"
+			required="true" />
+
+		<h:commandButton value="Ajouter" action="#{produitMB.ajouterProduit}"></h:commandButton>
+
+	</h:form>
+
+
+
+	<p:dataTable var="categorie" value="#{sessionScope.listeCategories}">
+
+		<p:column headerText="Id">
+			<h:outputText value="#{categorie.idCategorie}" />
+		</p:column>
+
+		<p:column headerText="Désignation">
+			<h:outputText value="#{categorie.nomCategorie}" />
+		</p:column>
+
+		<p:column headerText="Description">
+			<h:outputText value="#{categorie.description}" />
+		</p:column>
+	</p:dataTable>
+
+
+</h:body>
+</html>

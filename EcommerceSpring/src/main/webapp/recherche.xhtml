@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:p="http://primefaces.org/ui">
+
+
+<h:head>
+	<title>Page Login</title>
+</h:head>
+
+<h:body>
+
+
+	<h1 style="text-align: center; position: relative; color: gold">Rechercher
+		un produit</h1>
+
+	<h:form>
+		ID :<h:inputText value="#{produitMB.produit.idProduit}"></h:inputText>
+		<h:commandButton value="Recherche"
+			action="#{produitMB.rechercheProduitParId}"></h:commandButton>
+	</h:form>
+
+	<h1 style="text-align: center; position: relative; color: gold">Résultat
+		de la recherche</h1>
+
+
+	<p:dataTable var="produit" value="#{produitMB.produit}">
+		<p:column headerText="Id">
+			<h:outputText value="#{produit.idProduit}" />
+		</p:column>
+
+		<p:column headerText="Désignation">
+			<h:outputText value="#{produit.designation}" />
+		</p:column>
+
+		<p:column headerText="Description">
+			<h:outputText value="#{produit.description}" />
+		</p:column>
+
+		<p:column headerText="Prix">
+			<h:outputText value="#{produit.prix}" />
+		</p:column>
+
+		<p:column headerText="Stock">
+			<h:outputText value="#{produit.quantite}" />
+		</p:column>
+
+
+
+		<p:column headerText="Categorie ID/Désignation">
+			<h:outputText value="#{produit.categorie.idCategorie}" />
+			<h:outputText value="/" />
+
+			<h:outputText value="#{produit.categorie.nomCategorie}" />
+
+		</p:column>
+
+		<p:column headerText="Illustration">
+			<p:graphicImage name="/#{produit.image}" width="175px" />
+
+
+		</p:column>
+
+
+	</p:dataTable>
+
+
+
+
+
+
+
+
+</h:body>
+</html>
