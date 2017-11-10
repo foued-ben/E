@@ -29,7 +29,8 @@ public class ClientManagedBean implements Serializable {
 	
 	@ManagedProperty(value = "#{categorieService}")
 	private IServiceCategorie categorieService;
-	
+
+
 	@ManagedProperty(value = "#{produitService}")
 	private IProduitService produitService;
 	
@@ -55,9 +56,9 @@ public class ClientManagedBean implements Serializable {
 	}
 
 
-//	public void setProduitService(IProduitService produitService) {
-//		this.produitService = produitService;
-//	}
+	public void setProduitService(IProduitService produitService) {
+		this.produitService = produitService;
+	}
 
 
 	public void setClientService(IClientService clientService) {
