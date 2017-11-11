@@ -14,31 +14,47 @@
 <h:body>
 
 
-
+	
 	<h1 style="text-align: center; position: relative; color: gold">Ajouter
 		un produit</h1>
 
 	<h:form enctype="multipart/form-data">
+	<p:panelGrid columns="3">
 				Designation : <p:inputText value="#{produitMB.produit.designation}"
-			required="true" validatorMessage="Veuillez indiquer la désignation du produit"/>
+			required="true" id="designation">
+				<f:validator validatorId="Taillemini"></f:validator>
+			</p:inputText> 						
+				<p:message for="designation"></p:message>
+			
 		Description : <p:inputText value="#{produitMB.produit.description}"
-			required="true" />
-		Prix : <p:inputText value="#{produitMB.produit.prix}" required="true" />
+			required="true" id="description"/> 	
+			<p:message for="description"></p:message>
+			
+		Prix : <p:inputText value="#{produitMB.produit.prix}" required="true" id="prix"> 	
+			<f:validator validatorId="verifPrix"></f:validator>
+		</p:inputText>						
+		<p:message for="prix"></p:message>
+		
 		Stock : <p:inputText value="#{produitMB.produit.quantite}" id="stock" validator="#{produitMB.validationStock}">
 		
 			</p:inputText>
-		Catégorie (ID) : <p:inputText value="#{produitMB.idCategorie}" required="true" validator="#{produitMB.verifCategorie}"/>
+			<p:message for="stock"></p:message>
+			
+		Catégorie (ID) : <p:inputText value="#{produitMB.idCategorie}" required="true" validator="#{produitMB.verifCategorie}" id="categorie"/>
+							<p:message for="categorie"></p:message>
+		
 		Image : <p:fileUpload value="#{produitMB.imageFichier}" mode="simple" skinSimple="true"></p:fileUpload>
 
 		<h:commandButton value="Ajouter" action="#{produitMB.ajouterProduit}"></h:commandButton>
-	<p:growl></p:growl>
+			</p:panelGrid>
+		
+	<p:growl sticky="true"></p:growl>
 	</h:form>
 
 
 	<h1 style="text-align: center; position: relative; color: gold">Ajouter une image à un produit</h1>
 	
 	<h:form enctype="multipart/form-data">
-		<p:messages showDetail="true"></p:messages>
 		ID de produit : <h:inputText value="#{produitMB.produit.idProduit}"></h:inputText>
 		<p:fileUpload value="#{produitMB.imageFichier}" mode="simple" skinSimple="true"></p:fileUpload>
 		<h:commandButton value="Envoyer l'image" ajax="false" actionListener="#{produitMB.associationImageProduit}"></h:commandButton>

@@ -85,7 +85,6 @@ public class ProduitManagedBean {
 		Categorie catTemp = new Categorie();
 		catTemp.setIdCategorie(this.idCategorie);
 		this.produit.setCategorie(catTemp);
-		System.out.println(produit.getCategorie());
 		this.produit.setImageFichier(imageFichier.getContents());
 
 		//Appel de la méthode
