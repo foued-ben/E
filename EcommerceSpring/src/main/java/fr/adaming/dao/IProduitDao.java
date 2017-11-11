@@ -2,6 +2,8 @@ package fr.adaming.dao;
 
 import java.util.List;
 
+import org.primefaces.model.UploadedFile;
+
 import fr.adaming.modele.Produit;
 
 public interface IProduitDao {
@@ -15,5 +17,7 @@ public interface IProduitDao {
 	public void supprimerProduit(Produit produit);
 	
 	public Produit modifierProduit(Produit produit);
+	
+	public int assoicierImageProduit(Produit produit);
 	
 }

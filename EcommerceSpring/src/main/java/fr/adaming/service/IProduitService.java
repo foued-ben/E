@@ -2,6 +2,8 @@ package fr.adaming.service;
 
 import java.util.List;
 
+import org.primefaces.model.UploadedFile;
+
 import fr.adaming.modele.Produit;
 
 public interface IProduitService {
@@ -16,4 +18,7 @@ public interface IProduitService {
 	public void supprimerProduit(Produit produit);
 	
 	public Produit modifierProduit(Produit produit);
+	
+	public int assoicierImageProduit(Produit produit);
+
 }

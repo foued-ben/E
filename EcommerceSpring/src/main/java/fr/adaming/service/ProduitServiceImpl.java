@@ -2,6 +2,7 @@ package fr.adaming.service;
 
 import java.util.List;
 
+import org.primefaces.model.UploadedFile;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -46,5 +47,12 @@ public class ProduitServiceImpl implements IProduitService{
 	@Override
 	public Produit modifierProduit(Produit produit) {
 		return daoProduit.modifierProduit(produit);
+	}
+
+
+	@Override
+	public int assoicierImageProduit(Produit produit) {
+
+		return daoProduit.assoicierImageProduit(produit);
 	}
 }

@@ -55,10 +55,12 @@
 		</p:column>
 
 		<p:column headerText="Illustration">
-			<p:graphicImage name="/#{produit.image}" width="150px" />
+			<p:graphicImage value="/#{produit.image}" width="150px" />
 
 
 		</p:column>
+	<p:column headerText="Image DB">
+	</p:column>
 
 		<p:column headerText="Supprimer le produit">
 			<h:form>
@@ -183,12 +185,10 @@
 			action="#{categorieMB.modifierCategorie}"></h:commandButton>
 	</h:form>
 	
-	<h1 style="text-align: center; position: relative; color: gold">Test</h1>
+	<h1 style="text-align: center; position: relative; color: gold">PDF</h1>
 	
-	<h:form enctype="multipart/form-data">
-		<p:messages showDetail="true"></p:messages>
-		<p:fileUpload mode="simple"></p:fileUpload>
-		<h:commandButton value="Envoyer l'image" ajax="false"></h:commandButton>
+	<h:form>
+		<h:commandButton value="Ecrire PDF" ></h:commandButton>
 	</h:form>
 
 

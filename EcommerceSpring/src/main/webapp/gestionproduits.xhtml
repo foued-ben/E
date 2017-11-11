@@ -34,6 +34,18 @@
 	</h:form>
 
 
+	<h1 style="text-align: center; position: relative; color: gold">Ajouter une image à un produit</h1>
+	
+	<h:form enctype="multipart/form-data">
+		<p:messages showDetail="true"></p:messages>
+		ID de produit : <h:inputText value="#{produitMB.produit.idProduit}"></h:inputText>
+		<p:fileUpload value="#{produitMB.imageFichier}" mode="simple" skinSimple="true"></p:fileUpload>
+		<h:commandButton value="Envoyer l'image" ajax="false" actionListener="#{produitMB.associationImageProduit}"></h:commandButton>
+		<h:graphicImage value="image" alt="Image à envoyer" url="/image"></h:graphicImage>
+	</h:form>
+
+
+
 
 	<p:dataTable var="categorie" value="#{sessionScope.listeCategories}">
 

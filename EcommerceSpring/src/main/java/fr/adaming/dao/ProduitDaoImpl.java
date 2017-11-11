@@ -1,10 +1,13 @@
 package fr.adaming.dao;
 
+import java.io.IOException;
 import java.util.List;
 
+import org.hibernate.HibernateException;
 import org.hibernate.Query;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
+import org.primefaces.model.UploadedFile;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
@@ -88,4 +91,25 @@ public class ProduitDaoImpl implements IProduitDao{
 		
 		return produitCherche;
 	}
+
+
+	@Override
+	public int assoicierImageProduit(Produit produit) {
+		Session session = sessionFactory.getCurrentSession();
+		String req = "UPDATE Produit prod SET prod.imageFichier=:pImage WHERE prod.idProduit=:pIDProduit";
+		Query query = session.createQuery(req);
+		
+		//Passage des paramètre.
+		try {
+			query.setParameter("pImage",produit.getImageFichier());
+			query.setParameter("pIDProduit",produit.getIdProduit());
+			return query.executeUpdate();
+		} catch (HibernateException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+			return 0;
+		}
+	}
+
+
 }

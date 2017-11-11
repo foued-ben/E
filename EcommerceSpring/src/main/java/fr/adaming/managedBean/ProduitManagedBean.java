@@ -7,6 +7,9 @@ import javax.faces.bean.ManagedProperty;
 import javax.faces.bean.RequestScoped;
 import javax.faces.context.FacesContext;
 
+import org.primefaces.model.UploadedFile;
+import org.springframework.util.Base64Utils;
+
 import fr.adaming.modele.Categorie;
 import fr.adaming.modele.Produit;
 import fr.adaming.service.IProduitService;
@@ -18,7 +21,7 @@ public class ProduitManagedBean {
 //Attribut;
 	private int idCategorie;
 	private Produit produit;
-	
+	private UploadedFile imageFichier;
 	// Injection dépendences
 	@ManagedProperty(value="#{produitService}")
 	private IProduitService serviceProduit;
@@ -52,8 +55,19 @@ public class ProduitManagedBean {
 		this.serviceProduit = serviceProduit;
 	}
 	
+	
+	public UploadedFile getImageFichier() {
+		return imageFichier;
+	}
+
+	public void setImageFichier(UploadedFile imageFichier) {
+		this.imageFichier = imageFichier;
+	}
+
+	
 	//Méthodes propres.
 	
+
 	public String rechercheProduitParId(){
 		//Appel de la méthode
 		Produit produitCherche = serviceProduit.rechercherProduitAvecId(this.produit);
@@ -72,6 +86,7 @@ public class ProduitManagedBean {
 		if(produitAjout!=null){
 			// On actualise la liste et on l'ajoute à la session
 			List<Produit> listeProduit = serviceProduit.listerProduits();
+
 			FacesContext.getCurrentInstance().getExternalContext().getSessionMap().put("listeProduits", listeProduit);
 		}
 		return "accueil";
@@ -100,6 +115,18 @@ public class ProduitManagedBean {
 			System.out.println("Modif Impossible");
 		}
 		
+		return "accueil";
+	}
+	
+	public String associationImageProduit(){
+		//On appelle la méthode
+		this.produit.setImageFichier(imageFichier.getContents());
+		int verif =serviceProduit.assoicierImageProduit(this.produit);
+		if(verif==1){
+			System.out.println("Ca a marché");
+		}else{
+			System.out.println("Erreur d'ajout de l'image");
+		}
 		return "accueil";
 	}
 	

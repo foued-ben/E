@@ -9,6 +9,8 @@ import javax.faces.bean.ManagedProperty;
 import javax.faces.bean.RequestScoped;
 import javax.faces.context.FacesContext;
 
+import org.springframework.util.Base64Utils;
+
 import fr.adaming.dao.ICategorieDao;
 import fr.adaming.modele.Administrateur;
 import fr.adaming.modele.Categorie;
@@ -30,10 +32,12 @@ public class AdminManagedBean {
 	
 	private Administrateur administrateur;
 	private List<Produit> listeProduit;
+	private List<Categorie> listeCategorie;
 
 	public AdminManagedBean() {
 		this.administrateur = new Administrateur();
 		this.listeProduit = new ArrayList<>();
+		this.listeCategorie = new ArrayList<>();
 	}
 
 	//Getters/Setters pour Injections
@@ -70,6 +74,14 @@ public class AdminManagedBean {
 		this.listeProduit = listeProduit;
 	}
 
+	public List<Categorie> getListeCategorie() {
+		return listeCategorie;
+	}
+
+	public void setListeCategorie(List<Categorie> listeCategorie) {
+		this.listeCategorie = listeCategorie;
+	}
+
 	
 	//Méthodes du managedBean
 	
@@ -85,6 +97,8 @@ public class AdminManagedBean {
 			//On liste l'ensemble des produits et des catégories
 			listeProduit = serviceProduit.listerProduits();
 			List<Categorie> listeCategorie = serviceCategorie.listerCategorie();
+
+
 			//On ajoute la liste des produits et la liste des catégories à la session
 			FacesContext.getCurrentInstance().getExternalContext().getSessionMap().put("listeProduits", listeProduit);
 			FacesContext.getCurrentInstance().getExternalContext().getSessionMap().put("listeCategories", listeCategorie);
@@ -101,6 +115,10 @@ public class AdminManagedBean {
 		
 		return "login";
 		
+	}
+	
+	public void ecrirePDF(){
+		Document docPDF = new Document();
 	}
 	
 	

@@ -8,6 +8,7 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
+import javax.persistence.Lob;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 import javax.persistence.Transient;
@@ -26,6 +27,8 @@ public class Produit {
 	private String image;
 	@Column(columnDefinition="TINYINT(1)")
 	private boolean selectionne;
+	@Lob
+	private byte[] imageFichier;
 	
 	// Association avec la catégorie
 	@ManyToOne
@@ -45,8 +48,31 @@ public class Produit {
 
 	
 
-	public Produit(String designation, String description, double prix, int quantite, String image,
-			boolean selectionne) {
+//	public Produit(String designation, String description, double prix, int quantite, String image,
+//			boolean selectionne) {
+//		super();
+//		this.designation = designation;
+//		this.description = description;
+//		this.prix = prix;
+//		this.quantite = quantite;
+//		this.image = image;
+//		this.selectionne = selectionne;
+//	}
+//
+//	public Produit(int idProduit, String designation, String description, double prix, int quantite, String image,
+//			boolean selectionne) {
+//		super();
+//		this.idProduit = idProduit;
+//		this.designation = designation;
+//		this.description = description;
+//		this.prix = prix;
+//		this.quantite = quantite;
+//		this.image = image;
+//		this.selectionne = selectionne;
+//	}
+
+	public Produit(String designation, String description, double prix, int quantite, String image, boolean selectionne,
+			byte[] imageFichier) {
 		super();
 		this.designation = designation;
 		this.description = description;
@@ -54,19 +80,23 @@ public class Produit {
 		this.quantite = quantite;
 		this.image = image;
 		this.selectionne = selectionne;
+		this.imageFichier = imageFichier;
 	}
 
+	
+
 	public Produit(int idProduit, String designation, String description, double prix, int quantite, String image,
-			boolean selectionne) {
-		super();
-		this.idProduit = idProduit;
-		this.designation = designation;
-		this.description = description;
-		this.prix = prix;
-		this.quantite = quantite;
-		this.image = image;
-		this.selectionne = selectionne;
-	}
+		boolean selectionne, byte[] imageFichier) {
+	super();
+	this.idProduit = idProduit;
+	this.designation = designation;
+	this.description = description;
+	this.prix = prix;
+	this.quantite = quantite;
+	this.image = image;
+	this.selectionne = selectionne;
+	this.imageFichier = imageFichier;
+}
 
 
 
@@ -74,6 +104,9 @@ public class Produit {
 	public int getIdProduit() {
 		return idProduit;
 	}
+
+
+
 	public void setIdProduit(int idProduit) {
 		this.idProduit = idProduit;
 	}
@@ -125,7 +158,21 @@ public class Produit {
 		return image;
 	}
 	
+	public byte[] getImageFichier() {
+		return imageFichier;
+	}
+
+
+
+	public void setImageFichier(byte[] imageFichier) {
+		this.imageFichier = imageFichier;
+	}
+	
 	// toString
+
+
+
+
 
 
 
