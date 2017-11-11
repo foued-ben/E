@@ -1,0 +1,90 @@
+<!DOCTYPE html>
+
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:p="http://primefaces.org/ui">
+
+<h:head>
+	<title>categories</title>
+</h:head>
+<h:body style="background-image :   url(resources/neige2.jpg); ">
+
+	<h:outputStylesheet library="css" name="style.css" />
+	<div class="container">
+		<img width="1350" height="400" src="resources/fond_rdn2.jpg" />
+		<div class="caption">
+			<h1 style="color: gold;">Disney Store</h1>
+		</div>
+	</div>
+
+
+	<h:form>
+		<p:breadCrumb>
+			<p:menuitem value="Accueil" url="accueilclient.xhtml" />
+			<p:menuitem value="Catégories" url="categorie.xhtml"
+				update=":listeCat" />
+			<p:menuitem value="Produits" url="produitclient.xhtml"
+				update=":listeProd" />
+			<p:menuitem value="Mon panier" url="panierclient.xhtml" />
+		</p:breadCrumb>
+	</h:form>
+	<p:separator />
+	<p:spacer height="20px" />
+
+
+
+
+
+
+	<h1 style="color: gold; text-align: center">Résultats de la recherche</h1>
+
+
+
+
+	<p:dataTable var="prod" value="#{sessionScope.listeProduitsByMot}"
+		id="listeProd">
+		<p:column headerText="Id">
+			<h:outputText value="#{prod.idProduit}" />
+		</p:column>
+
+		<p:column headerText="Nom">
+			<h:outputText value="#{prod.designation}" />
+		</p:column>
+
+		<p:column headerText="Description">
+			<h:outputText value="#{prod.description}" />
+		</p:column>
+
+		<p:column headerText="En stock">
+			<h:outputText value="#{prod.quantite}" />
+		</p:column>
+
+		<p:column headerText="Prix (€)">
+			<h:outputText value="#{prod.prix}" />
+		</p:column>
+
+		<p:column headerText="Commander">
+			<h:form>
+				Nombre :<h:inputText value="#{cliMB.nombreCommande}" />
+
+				<p:commandButton value="Commander" action="#{cliMB.ajouterPanier}"
+					styleClass="ui-priority-primary">
+					<f:setPropertyActionListener value="#{prod.idProduit}"
+						target="#{cliMB.produitDemande.idProduit}"></f:setPropertyActionListener>
+
+				</p:commandButton>
+			</h:form>
+		</p:column>
+
+
+
+	</p:dataTable>
+
+	<p:spacer height="100px" />
+	<p:separator />
+
+	<h:messages style="color:red"></h:messages>
+</h:body>
+</html>

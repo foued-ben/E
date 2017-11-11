@@ -18,7 +18,7 @@ public interface IClientDao {
 	public Produit addProduitPanier(Produit p, int quantite, Panier pan) ;
 	public int deleteProduitPanier(Produit p, Panier pan) ; 
 	public Client enregitrementClient(Client c) ; 
-	public Commande enregistrementCommabde(Commande commande);
+	public Commande enregistrementCommande(Commande commande);
 	public Client recuperClient(Client c);
 	
 	

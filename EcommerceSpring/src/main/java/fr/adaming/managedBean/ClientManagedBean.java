@@ -2,6 +2,7 @@ package fr.adaming.managedBean;
 
 import java.io.Serializable;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 import javax.annotation.PostConstruct;
@@ -15,6 +16,7 @@ import javax.servlet.http.HttpSession;
 import fr.adaming.modele.Administrateur;
 import fr.adaming.modele.Categorie;
 import fr.adaming.modele.Client;
+import fr.adaming.modele.Commande;
 import fr.adaming.modele.LigneCommande;
 import fr.adaming.modele.Panier;
 import fr.adaming.modele.Produit;
@@ -287,5 +289,246 @@ public class ClientManagedBean implements Serializable {
 		}
 	}
 
+	public String afficherProduits() {
+
+		List<Produit> listeOut = clientService.getAllProduits();
+
+		if (listeOut != null) {
+			this.listeProduits = listeOut;
+
+			maSession.setAttribute("produitsListe", listeProduits);
+
+			return "produit";
+		} else {
+			FacesContext.getCurrentInstance().addMessage(null, new FacesMessage("Une erreur s'est produite"));
+			return "accueilclient";
+		}
+	}
+	
+	public String rechProdByName() {
+		List<Produit> listeChercher = clientService.getProduitsByMot(this.mot);
+		System.out.println(listeChercher);
+
+		maSession.setAttribute("listeProduitsByMot", listeChercher);
+		return "rechProdByMot";
+	}
+	
+	public String afficherProduitsByCat() {
+
+		List<Produit> listeOut = clientService.getAllProduitByCategorie(this.categorie);
+
+		System.out.println(listeOut);
+		if (listeOut != null) {
+			// maSession.setAttribute("categoriesListe", listeCategories);
+			this.listeProduits = listeOut;
+			maSession.setAttribute("listeProduits", listeProduits);
+			System.out.println("La liste des produits est" + listeProduits);
+
+			return "produitclient";
+		} else {
+			FacesContext.getCurrentInstance().addMessage(null, new FacesMessage("Une erreur s'est produite"));
+			return "accueilclient";
+		}
+	}
+	
+	
+	public String ajouterPanier() {
+		// On récupère le panier de la session
+		Panier panier = (Panier) maSession.getAttribute("panierSession");
+		// On récupère la liste des commandes déjà effectuée
+		List<LigneCommande> listeCommande = panier.getListeLignesCommande();
+		// On récupère le produit demandé.
+		Produit produitCherche = produitService.rechercherProduitAvecId(this.produitDemande);
+
+		// On initialise la ligne de commande qui devra être supprimer.
+		LigneCommande ligneCommandeSupp = null;
+
+		// On vérifie si le produit a été commandé avant
+		for (LigneCommande commande : listeCommande) {
+			Produit produitTemp = commande.getProduit();
+			int idProduitTemp = produitTemp.getIdProduit();
+			System.out.println(idProduitTemp);
+			if (idProduitTemp == produitDemande.getIdProduit()) {
+				// On ajoute la quantité déjà commandé à la quantité demandé.
+				int nombreCommandeActualise = this.nombreCommande + commande.getQuantite();
+				this.nombreCommande = this.nombreCommande + commande.getQuantite();
+				System.out.println("Nombre total commandé " + nombreCommandeActualise);
+				// On supprime la ligne de commande de la liste
+				ligneCommandeSupp = commande;
+			}
+		}
+		// On vérifie que la commande est possible avec le nouveau nombre
+		// demandé.
+		if (nombreCommande <= produitCherche.getQuantite()) {
+			listeCommande.remove(ligneCommandeSupp);
+		} 
+
+		// On vérifie qu'une quantité suffisante de produit est en stock
+		if (nombreCommande <= produitCherche.getQuantite() && nombreCommande > 0) {
+			System.out.println("Stock suffisant");
+			// On ajoute le produit à la ligne de commande
+			this.ligneCommande.setProduit(produitCherche);
+			// On ajoute le nombre d'objet commande à la ligne de commande
+			this.ligneCommande.setQuantite(nombreCommande);
+			// On calcule le prix.
+			double prixLigne = nombreCommande * produitCherche.getPrix();
+			// On ajoute le prix dans la ligne de commande.
+			ligneCommande.setPrix(prixLigne);
+
+			// On ajoute la ligne de commande à la liste des commandes.
+			listeCommande.add(ligneCommande);
+			System.out.println(listeCommande);
+
+			// On ajoute la liste dans le panier.
+			panier.setListeLignesCommande(listeCommande);
+			// On ajoute le panier à la session
+			maSession.setAttribute("panierSession", panier);
+			FacesContext.getCurrentInstance().addMessage(null,
+					new FacesMessage("Le produit a bien été ajouté au panier"));
+
+		} else if (nombreCommande <= 0) {
+			System.out.println("Veuiller commander un nombre positif d'objets ");
+		} else {
+			System.out.println("Stock insuffisant");
+			FacesContext.getCurrentInstance().addMessage(null,
+					new FacesMessage("Cher client nos stocks sont insuffisants"));
+
+		}
+
+		return "produitclient";
+	}
+	
+	public String supprProdPanier() {
+		// On récupère le panier de la session
+		Panier panier = (Panier) maSession.getAttribute("panierSession");
+		System.out.println(panier);
+		// On récupère la liste des commandes déjà effectuée
+		List<LigneCommande> listeCommande = panier.getListeLignesCommande();
+
+		// On supprime la ligne de commande à la liste des commandes.
+		listeCommande.remove(this.ligneCommande);
+		System.out.println(listeCommande);
+
+		// On ajoute la liste dans le panier.
+		panier.setListeLignesCommande(listeCommande);
+		// On ajoute le panier à la session
+		maSession.setAttribute("panierSession", panier);
+		return "panierclient";
+	}
+	
+	public String enregistrement() {
+		// On génère un code personnel que le client pourra utilisé pour les
+		// commandes ultérieures
+		String caracteres = "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789";
+		StringBuilder code = new StringBuilder();
+
+		int max = caracteres.length() - 1;
+
+		for (int i = 1; i < 10; i++) {
+			// System.out.println(i);
+			int emplacementCarac = (int) Math.floor(max * Math.random());
+			char caracTemp = caracteres.charAt(emplacementCarac);
+			// System.out.println("Nombre"+i+"Caractere"+caracteres.charAt(emplacementCarac));
+			code.append(caracTemp);
+		}
+		// On ajoute le code au client
+		System.out.println(code);
+		this.client.setCodePerso(code.toString());
+
+		System.out.println(this.client.getCodePerso());
+		Client cli_enr = clientService.enregitrementClient(this.client);
+
+		this.client = cli_enr;
+		// On récupère la liste des commandes
+		Panier panier = (Panier) maSession.getAttribute("panierSession");
+		List<LigneCommande> listeCommande = panier.getListeLignesCommande();
+
+		double prix = 0;
+
+		for (LigneCommande commande : listeCommande) {
+			System.out.println(commande.getPrix());
+			prix = prix + commande.getPrix();
+		}
+
+		this.prixTot = prix;
+
+		maSession.setAttribute("panierSession", panier);
+		System.out.println(panier);
+		FacesContext.getCurrentInstance().addMessage(null, new FacesMessage("Le client a bien été enregistré"));
+
+		// Ajout de la commmande à la base de données. La commande est composée
+		// de la liste des commandes (identique à celle du panier)
+		// d'une date et d'un client.
+		Date dateCommande = new Date();
+		Commande commandeTemp = new Commande(dateCommande);
+
+		// On ajoute le client et la liste des commandes à commandeTemp.
+		commandeTemp.setListeLigneCommande(listeCommande);
+		commandeTemp.setClient(cli_enr);
+		// On enregistre la commande dans la base
+		clientService.enregistrementCommande(commandeTemp);
+		System.out.println(commandeTemp);
+
+		// Gestion du stock.
+		for (LigneCommande ligne : listeCommande) {
+			// on récupère le produit commandé
+			Produit produitTemp = ligne.getProduit();
+			System.out.println(produitTemp);
+			// On change la quantité de chaque produit
+			int nouveauStock = produitTemp.getQuantite() - ligne.getQuantite();
+			produitTemp.setQuantite(nouveauStock);
+			// Le produit avec le nouveau stocke est utilisé pour modifié la
+			// valeur dans la table.
+			produitService.modifierProduit(produitTemp);
+			System.out.println(produitTemp);
+		}
+		return "enregistrementclient";
+	}
+	
+	public String nouvelleCommande() {
+
+		// On récupère le client portant l'id donné
+		Client clientTemp = clientService.recuperClient(this.client);
+		this.client = clientTemp;
+		// On récupère la liste des commandes
+		Panier panier = (Panier) maSession.getAttribute("panierSession");
+		List<LigneCommande> listeCommande = panier.getListeLignesCommande();
+
+		// Calcul du prix
+		double prix = 0;
+
+		for (LigneCommande commande : listeCommande) {
+			System.out.println(commande.getPrix());
+			prix = prix + commande.getPrix();
+		}
+
+		this.prixTot = prix;
+
+		// On créer la commande avec une date
+		Date dateCommande = new Date();
+		Commande commandeTemp = new Commande(dateCommande);
+
+		// On lui ajoute le contenu du panier et le client
+		// On ajoute le client et la liste des commandes à commandeTemp.
+		commandeTemp.setListeLigneCommande(listeCommande);
+		commandeTemp.setClient(this.client);
+		// On enregistre la commande dans la base
+		clientService.enregistrementCommande(commandeTemp);
+
+		// Gestion du stock.
+		for (LigneCommande ligne : listeCommande) {
+			// on récupère le produit commandé
+			Produit produitTemp = ligne.getProduit();
+			System.out.println(produitTemp);
+			// On change la quantité de chaque produit
+			int nouveauStock = produitTemp.getQuantite() - ligne.getQuantite();
+			produitTemp.setQuantite(nouveauStock);
+			// Le produit avec le nouveau stocke est utilisé pour modifié la
+			// valeur dans la table.
+			produitService.modifierProduit(produitTemp);
+			System.out.println(produitTemp);
+		}
+		return "enregistrementclient";
+	}
 	
 }

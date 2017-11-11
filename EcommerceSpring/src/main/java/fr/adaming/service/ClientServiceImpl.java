@@ -34,14 +34,14 @@ public class ClientServiceImpl implements IClientService {
 
 	@Override
 	public List<Produit> getAllProduits() {
-		// TODO Auto-generated method stub
-		return null;
+		return clientDao.getAllProduits();
+
 	}
 
 	@Override
 	public List<Produit> getAllProduitByCategorie(Categorie c) {
 		// TODO Auto-generated method stub
-		return null;
+		return clientDao.getAllProduitByCategorie(c);
 	}
 
 	@Override
@@ -52,8 +52,7 @@ public class ClientServiceImpl implements IClientService {
 
 	@Override
 	public List<Produit> getProduitsByMot(String mot) {
-		// TODO Auto-generated method stub
-		return null;
+		return clientDao.getProduitsByMot(mot);
 	}
 
 	@Override
@@ -70,20 +69,17 @@ public class ClientServiceImpl implements IClientService {
 
 	@Override
 	public Client enregitrementClient(Client c) {
-		// TODO Auto-generated method stub
-		return null;
+		return clientDao.enregitrementClient(c);
 	}
 
 	@Override
-	public Commande enregistrementCommabde(Commande commande) {
-		// TODO Auto-generated method stub
-		return null;
+	public Commande enregistrementCommande(Commande commande) {
+		return clientDao.enregistrementCommande(commande);
 	}
 
 	@Override
 	public Client recuperClient(Client c) {
-		// TODO Auto-generated method stub
-		return null;
+		return clientDao.recuperClient(c);
 	}
 
 }

@@ -1,0 +1,153 @@
+<!DOCTYPE html>
+
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:p="http://primefaces.org/ui">
+
+<h:head>
+	<title>categories</title>
+</h:head>
+<h:body style="background-image :   url(resources/sable.jpg); ">
+
+	<h:outputStylesheet library="css" name="style.css" />
+	<div class="container">
+		<img width="1350" height="400" src="resources/fond_roilion.jpg" />
+		<div class="caption">
+			<h1 style="color: gold;">Disney Store</h1>
+		</div>
+	</div>
+
+
+	<h:form>
+		<p:breadCrumb>
+			<p:menuitem value="Accueil" url="accueilclient.xhtml" />
+			<p:menuitem value="Catégories" url="categorie.xhtml"
+				update=":listeCat" />
+			<p:menuitem value="Produits" url="produitclient.xhtml"
+				update=":listeProd" />
+			<p:menuitem value="Mon panier" url="#" />
+		</p:breadCrumb>
+	</h:form>
+	<p:separator />
+	<p:spacer height="20px" />
+
+
+
+
+
+
+	<h1 style="color: gold; text-align: center">Liste des produit de
+		mon panier</h1>
+
+	<p:dataTable var="ligneCommande"
+		value="#{sessionScope.panierSession.listeLignesCommande}"
+		id="listePanier">
+
+		<p:column headerText="Prix Total">
+			<h:outputText value="#{ligneCommande.prix}" />
+		</p:column>
+
+		<p:column headerText="Nombre d'unité">
+			<h:outputText value="#{ligneCommande.quantite}" />
+		</p:column>
+
+		<p:column headerText="Designation">
+			<h:outputText value="#{ligneCommande.produit.designation}" />
+		</p:column>
+
+		<p:column headerText="Supprimer des produits">
+			<h:form>
+				<p:commandButton type="submit"
+					value="Supprimer le produit du panier"
+					action="#{cliMB.supprProdPanier}" styleClass="ui-priority-primary"
+					update="@all">
+					<f:setPropertyActionListener value="#{ligneCommande}"
+						target="#{cliMB.ligneCommande}"></f:setPropertyActionListener>
+					<!-- 			 	<f:setPropertyActionListener value="#{ligneCommande.quantite}" target="#{cliMB.ligneCommande.quantite}"></f:setPropertyActionListener>	 	 -->
+					<!-- 			 	<f:setPropertyActionListener value="#{ligneCommande.produit.designation}" target="#{cliMB.ligneCommande.produit.designation}"></f:setPropertyActionListener>	 				 -->
+				</p:commandButton>
+			</h:form>
+		</p:column>
+
+
+	</p:dataTable>
+
+
+
+
+
+
+
+	<h:panelGrid columns="2">
+
+
+		<h:form>
+			<h3 style="color: gold">Enregistrez vos coordonnées afin de
+				poursuivre la commande</h3>
+
+	<div style="color: white">
+			<h:panelGrid columns="2">
+				<p:outputLabel for="nomID" value="Nom:" />
+				<p:inputMask id="nomID" value="#{cliMB.client.nomClient}" />
+
+				<p:outputLabel for="adresseID" value="Adresse :" />
+				<p:inputMask id="adresseID" value="#{cliMB.client.adresse}" />
+
+				<p:outputLabel for="emailID" value="Email:" />
+				<p:inputMask id="emailID" value="#{cliMB.client.email}" />
+
+
+				<p:outputLabel for="telID" value="Téléphone:" />
+				<p:inputMask id="telID" value="#{cliMB.client.tel}" />
+			</h:panelGrid>
+	</div>
+			<p:commandButton value="Enregistrer la commande" type="submit"
+				action="#{cliMB.enregistrement}" icon="ui-icon-disk" />
+
+
+
+
+		</h:form>
+		<h:form>
+			<h3 style="color: gold">Si vous êtes déjà client indiquer votre
+				code utilisateur fourni lors de votre première inscription
+				(actuellement c'est l'id)</h3>
+				
+				
+					<div style="color: white">
+				
+			<h:panelGrid columns="2">
+
+				<p:outputLabel for="idID" value="Identifiant:" />
+				<p:inputMask id="idID" value="#{cliMB.client.idClient}" />
+
+				<p:outputLabel for="codeID" value="Code Personel :" />
+				<p:inputMask id="codeID" value="#{cliMB.client.codePerso}" />
+
+			</h:panelGrid>
+			</div>
+			<p:commandButton value="Enregistrer la commande" type="submit"
+				action="#{cliMB.nouvelleCommande}" icon="ui-icon-disk" />
+
+		</h:form>
+	</h:panelGrid>
+
+	<p:growl autoUpdate="true"></p:growl>
+
+
+<IMG class="superpose" id="img_simba" src="resources/Simba.png" width="200"
+				height="200" />
+
+<IMG class="superpose" id="rafiki" src="resources/Rafiki.png" width="200"
+				height="200" />
+				
+<IMG class="superpose" id="timon" src="resources/Timon.png" width="200"
+				height="200" />
+				
+<IMG class="superpose" id="pumba" src="resources/Pumba.png" width="120"
+				height="120" />
+
+</h:body>
+</html>

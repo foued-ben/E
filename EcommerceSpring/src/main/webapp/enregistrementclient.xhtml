@@ -1,0 +1,108 @@
+<!DOCTYPE html>
+
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:p="http://primefaces.org/ui">
+
+<h:head>
+	<title>commande</title>
+</h:head>
+
+
+<h:body style="background-image :   url(resources/sable.jpg); ">
+
+	<h:outputStylesheet library="css" name="style.css" />
+	<div class="container">
+		<img width="1350" height="400" src="resources/fondroilion.jpg" />
+		<div class="caption">
+			<h1 style="color: gold;">Disney Store</h1>
+		</div>
+	</div>
+
+
+	<h:form>
+		<p:breadCrumb>
+			<p:menuitem value="Retour à l'accueil" url="login.xhtml" />
+		</p:breadCrumb>
+	</h:form>
+	<p:separator />
+	<p:spacer height="20px" />
+
+
+
+
+
+
+	<h1 style="color: gold; text-align: center">Récapitulatif de la
+		commande</h1>
+
+	<h2 style="color: green; text-align: center">Client</h2>
+
+	<p:dataTable var="cl" value="#{cliMB.client}">
+		<p:column headerText="Id">
+			<h:outputText value="#{cl.idClient}" />
+		</p:column>
+
+		<p:column headerText="Nom">
+			<h:outputText value="#{cl.nomClient}" />
+		</p:column>
+
+		<p:column headerText="Adresse">
+			<h:outputText value="#{cl.adresse}" />
+		</p:column>
+
+		<p:column headerText="Email">
+			<h:outputText value="#{cl.email}" />
+		</p:column>
+
+		<p:column headerText="Téléphone">
+			<h:outputText value="#{cl.tel}" />
+		</p:column>
+
+		<p:column headerText="Code Personel">
+			<h:outputText value="#{cl.codePerso}" />
+		</p:column>
+
+	</p:dataTable>
+
+	<p:separator />
+	<h2 style="color: gold; text-align: center">Panier</h2>
+
+
+	<p:dataTable var="ligneCommande"
+		value="#{sessionScope.panierSession.listeLignesCommande}"
+		id="listePanier">
+
+		<p:column headerText="Prix Total">
+			<h:outputText value="#{ligneCommande.prix}" />
+		</p:column>
+
+		<p:column headerText="Nombre d'unité">
+			<h:outputText value="#{ligneCommande.quantite}" />
+		</p:column>
+
+		<p:column headerText="Designation">
+			<h:outputText value="#{ligneCommande.produit.designation}" />
+		</p:column>
+
+
+	</p:dataTable>
+
+	<p:spacer height="50px" />
+	
+	Prix Total  : <h:outputText value="#{cliMB.prixTot}" />
+
+
+
+
+	<p:separator />
+
+
+	<h4 style="color: red; text-align: center">
+		<h:messages></h:messages>
+	</h4>
+
+</h:body>
+</html>

@@ -45,14 +45,40 @@ public class ClientDaoImpl implements IClientDao{
 
 	@Override
 	public List<Produit> getAllProduits() {
-		// TODO Auto-generated method stub
-		return null;
+		Session s = sf.getCurrentSession() ; 
+		// la requete HQL
+		String req ="FROM Produit";
+		
+		// recup d'un query
+		Query query = s.createQuery(req) ; 
+		
+		
+		// envoi de la req et recup du résultat
+		@SuppressWarnings("unchecked")
+		List<Produit> liste = query.list();
+		
+		return liste;
 	}
 
 	@Override
 	public List<Produit> getAllProduitByCategorie(Categorie c) {
-		// TODO Auto-generated method stub
-		return null;
+		Session s = sf.getCurrentSession() ; 
+		String req = "Select p from Produit p where p.categorie.idCategorie=:pidc";
+
+		// recup d'un query
+		Query query = s.createQuery(req) ; 
+
+		// passage des param
+		query.setParameter("pidc", c.getIdCategorie());
+
+		try{
+		List<Produit> listeProduitsCat = query.list();
+		return listeProduitsCat;
+
+		} catch (Exception e){
+			System.out.println("Impossible de trouver");
+			return null;
+		}
 	}
 
 	@Override
@@ -63,8 +89,22 @@ public class ClientDaoImpl implements IClientDao{
 
 	@Override
 	public List<Produit> getProduitsByMot(String mot) {
-		// TODO Auto-generated method stub
-		return null;
+		Session s = sf.getCurrentSession() ; 
+		String req = "SELECT prod FROM Produit prod WHERE prod.description LIKE :pDescription";
+		Query query = s.createQuery(req) ; 
+
+		// Production du paramètre
+		StringBuilder intitule = new StringBuilder();
+		intitule.append('%');
+		intitule.append(mot);
+		intitule.append('%');
+		String intituleParam = intitule.toString();
+		//Passage du paramètre
+		query.setParameter("pDescription", intituleParam);
+		@SuppressWarnings("unchecked")
+		List<Produit> liste = query.list();
+		
+		return liste;
 	}
 
 	@Override
@@ -81,20 +121,31 @@ public class ClientDaoImpl implements IClientDao{
 
 	@Override
 	public Client enregitrementClient(Client c) {
-		// TODO Auto-generated method stub
-		return null;
+		Session s = sf.getCurrentSession() ; 
+		
+		s.save(c) ; 
+		return c ;
 	}
 
 	@Override
-	public Commande enregistrementCommabde(Commande commande) {
-		// TODO Auto-generated method stub
-		return null;
+	public Commande enregistrementCommande(Commande commande) {
+		Session s = sf.getCurrentSession() ; 
+		
+		s.save(commande) ; 
+		return commande ;
 	}
 
 	@Override
 	public Client recuperClient(Client c) {
-		// TODO Auto-generated method stub
-		return null;
+		Session s = sf.getCurrentSession() ; 
+		String req ="SELECT client from Client client WHERE client.idClient=:pIDClient AND client.codePerso=:pCodePerso";
+		Query query = s.createQuery(req) ; 
+		System.out.println("requête créée");
+		query.setParameter("pIDClient",c.getIdClient());
+		query.setParameter("pCodePerso", c.getCodePerso());
+		Client clientChercher = (Client) query.uniqueResult();
+
+		return clientChercher;
 	}
 
 	
