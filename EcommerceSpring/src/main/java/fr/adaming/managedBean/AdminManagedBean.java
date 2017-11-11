@@ -1,5 +1,6 @@
 package fr.adaming.managedBean;
 
+import java.io.ByteArrayInputStream;
 import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.util.ArrayList;
@@ -13,6 +14,8 @@ import javax.faces.component.UIComponent;
 import javax.faces.context.FacesContext;
 import javax.faces.validator.ValidatorException;
 
+import org.primefaces.model.DefaultStreamedContent;
+import org.primefaces.model.StreamedContent;
 import org.springframework.util.Base64Utils;
 
 import com.itextpdf.text.Document;
@@ -111,10 +114,10 @@ public class AdminManagedBean {
 			listeProduit = serviceProduit.listerProduits();
 			List<Categorie> listeCategorie = serviceCategorie.listerCategorie();
 
-
 			//On ajoute la liste des produits et la liste des catégories à la session
 			FacesContext.getCurrentInstance().getExternalContext().getSessionMap().put("listeProduits", listeProduit);
 			FacesContext.getCurrentInstance().getExternalContext().getSessionMap().put("listeCategories", listeCategorie);
+			//On ajoute la liste des images 
 			return "accueil";
 		}else {
 			//On affiche un message pour indiquer le problème

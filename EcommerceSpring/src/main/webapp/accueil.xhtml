@@ -55,7 +55,9 @@
 		</p:column>
 
 		<p:column headerText="Illustration">
-			<p:graphicImage value="/#{produit.image}" width="150px" />
+			<p:graphicImage value="#{ImageMB.image}" width="150px" >
+				<f:param name="idProduit" value="#{produit.idProduit}"></f:param>
+			</p:graphicImage>
 
 
 		</p:column>

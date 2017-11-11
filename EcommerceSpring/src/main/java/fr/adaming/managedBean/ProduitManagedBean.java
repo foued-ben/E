@@ -92,6 +92,7 @@ public class ProduitManagedBean {
 		if(produitAjout!=null){
 			// On actualise la liste et on l'ajoute à la session
 			List<Produit> listeProduit = serviceProduit.listerProduits();
+			
 
 			FacesContext.getCurrentInstance().getExternalContext().getSessionMap().put("listeProduits", listeProduit);
 		}
