@@ -121,7 +121,7 @@
 		Stock : <p:inputText value="#{produitMB.produit.quantite}"
 			required="true" />
 		Catégorie (ID) : <p:inputText value="#{produitMB.idCategorie}"
-			required="true" />
+			required="true" validator="#{produitMB.verifCategorie}"/>
 			
 			Image :
 
@@ -188,7 +188,7 @@
 	<h1 style="text-align: center; position: relative; color: gold">PDF</h1>
 	
 	<h:form>
-		<h:commandButton value="Ecrire PDF" ></h:commandButton>
+		<h:commandButton value="Ecrire PDF" action="#{adminMB.ecrirePDF}" ></h:commandButton>
 	</h:form>
 
 

@@ -2,10 +2,13 @@ package fr.adaming.managedBean;
 
 import java.util.List;
 
+import javax.faces.application.FacesMessage;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.ManagedProperty;
 import javax.faces.bean.RequestScoped;
+import javax.faces.component.UIComponent;
 import javax.faces.context.FacesContext;
+import javax.faces.validator.ValidatorException;
 
 import org.primefaces.model.UploadedFile;
 import org.springframework.util.Base64Utils;
@@ -24,6 +27,7 @@ public class ProduitManagedBean {
 	private UploadedFile imageFichier;
 	// Injection dépendences
 	@ManagedProperty(value="#{produitService}")
+	
 	private IProduitService serviceProduit;
 
 	public ProduitManagedBean() {
@@ -81,6 +85,9 @@ public class ProduitManagedBean {
 		Categorie catTemp = new Categorie();
 		catTemp.setIdCategorie(this.idCategorie);
 		this.produit.setCategorie(catTemp);
+		System.out.println(produit.getCategorie());
+		this.produit.setImageFichier(imageFichier.getContents());
+
 		//Appel de la méthode
 		Produit produitAjout = serviceProduit.ajouterProduit(this.produit);
 		if(produitAjout!=null){
@@ -130,4 +137,27 @@ public class ProduitManagedBean {
 		return "accueil";
 	}
 	
+	public void verifCategorie(FacesContext context, UIComponent composant, Object value) throws ValidatorException{
+		// On récupère la liste des catégories
+		 int verif =0;
+		List<Categorie> listeCategorie = (List<Categorie>) FacesContext.getCurrentInstance().getExternalContext().getSessionMap().get("listeCategories");
+		for(Categorie categorie:listeCategorie){
+			if(categorie.getIdCategorie()==idCategorie){
+				verif =verif+1;
+			}
+		}
+		if(verif ==0){
+			
+			//FacesContext.getCurrentInstance().addMessage(null, new FacesMessage());
+			throw new ValidatorException(new FacesMessage("Catégorie non existante. Veuillez choisir une catégorie qui existe."));
+
+		}
+	}
+	
+	public void validationStock(FacesContext context, UIComponent composant, Object value) throws ValidatorException{
+		int saisie = (int) value;
+		if(saisie==0){
+			throw new ValidatorException(new FacesMessage("Un produit doit avoir au moins un exemplaire en stock."));
+		}
+	}
 }

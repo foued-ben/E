@@ -1,5 +1,7 @@
 package fr.adaming.managedBean;
 
+import java.io.FileNotFoundException;
+import java.io.FileOutputStream;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -7,11 +9,22 @@ import javax.faces.application.FacesMessage;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.ManagedProperty;
 import javax.faces.bean.RequestScoped;
+import javax.faces.component.UIComponent;
 import javax.faces.context.FacesContext;
+import javax.faces.validator.ValidatorException;
 
 import org.springframework.util.Base64Utils;
 
-import fr.adaming.dao.ICategorieDao;
+import com.itextpdf.text.Document;
+import com.itextpdf.text.DocumentException;
+import com.itextpdf.text.Paragraph;
+import com.itextpdf.text.pdf.PdfPCell;
+import com.itextpdf.text.pdf.PdfPTable;
+import com.itextpdf.text.pdf.PdfPTableFooter;
+import com.itextpdf.text.pdf.PdfPTableHeader;
+import com.itextpdf.text.pdf.PdfWriter;
+import com.itextpdf.text.pdf.fonts.otf.TableHeader;
+
 import fr.adaming.modele.Administrateur;
 import fr.adaming.modele.Categorie;
 import fr.adaming.modele.Produit;
@@ -118,8 +131,42 @@ public class AdminManagedBean {
 	}
 	
 	public void ecrirePDF(){
-		Document docPDF = new Document();
+		//On récupère les informations sur les produits depuis la session.
+		listeProduit = (List<Produit>) FacesContext.getCurrentInstance().getExternalContext().getSessionMap().get("listeProduits");
+		listeCategorie = (List<Categorie>) FacesContext.getCurrentInstance().getExternalContext().getSessionMap().get("listeCategories");
+		Document document = new Document();
+		try {
+			PdfWriter pdfWriter = PdfWriter.getInstance(document, new FileOutputStream("C:\\Users\\inti0236\\Desktop\\Test.pdf"));
+			document.open();
+
+			PdfPTable table = new PdfPTable(5);
+			for(int i=0; i<5;i++){
+				
+			}
+			Paragraph header = new Paragraph();
+			header.add("Les produits proposés par le magasin sont : ");
+			document.add(header);
+			header.clear();
+			header.add("Nom Produit" +" | " + "Quantité"+"Prix"+" | "+" | "+"Catégorie");
+			//document.add(table);
+			for (Produit prod :listeProduit){
+				Double prix =prod.getPrix();
+				String prixCarac = prix.toString();
+				Paragraph paragraphe = new Paragraph();
+				paragraphe.add(prod.getDesignation() + " | ");
+				paragraphe.add(prod.getQuantite()+ " | ");
+				paragraphe.add(prixCarac+" €"+" | ");
+				paragraphe.add(prod.getCategorie().getNomCategorie()+ " | ");
+
+				document.add(paragraphe);
+			}
+			document.close();
+		} catch (FileNotFoundException | DocumentException e) {
+			System.out.println("Erreur lors de la création du PDF");
+			e.printStackTrace();
+		}
 	}
+	
 	
 	
 }

@@ -18,19 +18,20 @@
 	<h1 style="text-align: center; position: relative; color: gold">Ajouter
 		un produit</h1>
 
-	<h:form>
+	<h:form enctype="multipart/form-data">
 				Designation : <p:inputText value="#{produitMB.produit.designation}"
-			required="true" />
+			required="true" validatorMessage="Veuillez indiquer la désignation du produit"/>
 		Description : <p:inputText value="#{produitMB.produit.description}"
 			required="true" />
 		Prix : <p:inputText value="#{produitMB.produit.prix}" required="true" />
-		Stock : <p:inputText value="#{produitMB.produit.quantite}"
-			required="true" />
-		Catégorie (ID) : <p:inputText value="#{produitMB.idCategorie}"
-			required="true" />
+		Stock : <p:inputText value="#{produitMB.produit.quantite}" id="stock" validator="#{produitMB.validationStock}">
+		
+			</p:inputText>
+		Catégorie (ID) : <p:inputText value="#{produitMB.idCategorie}" required="true" validator="#{produitMB.verifCategorie}"/>
+		Image : <p:fileUpload value="#{produitMB.imageFichier}" mode="simple" skinSimple="true"></p:fileUpload>
 
 		<h:commandButton value="Ajouter" action="#{produitMB.ajouterProduit}"></h:commandButton>
-
+	<p:growl></p:growl>
 	</h:form>
 
 
@@ -41,7 +42,7 @@
 		ID de produit : <h:inputText value="#{produitMB.produit.idProduit}"></h:inputText>
 		<p:fileUpload value="#{produitMB.imageFichier}" mode="simple" skinSimple="true"></p:fileUpload>
 		<h:commandButton value="Envoyer l'image" ajax="false" actionListener="#{produitMB.associationImageProduit}"></h:commandButton>
-		<h:graphicImage value="image" alt="Image à envoyer" url="/image"></h:graphicImage>
+		<h:graphicImage value="image." alt="Image à envoyer" url="/image"></h:graphicImage>
 	</h:form>
 
 
