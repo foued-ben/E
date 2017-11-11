@@ -28,23 +28,21 @@
 			<p:separator />
 	
 			Identification : <br />
-					<p:inputText value="#{adminMB.administrateur.identifiant}" id="Identifiant" >
+					<p:inputText value="#{adminMB.administrateur.identifiant}" required="true"/>
 
-					</p:inputText>
+
 					
 					<br />
 			Mot de passe : <br />
-					<h:inputText value="#{adminMB.administrateur.mdp}" id="MotdePasse">
+					<p:inputText value="#{adminMB.administrateur.mdp}"  required="true"/>
 
-					</h:inputText>
+
 					<br />
 
-					<h:commandButton value="Se connecter" action="#{adminMB.connexion}" />
+					<h:commandButton value="Se connecter" action="#{adminMB.connexion}" id="formulaireConnexion"/>
 				</h:panelGrid>
 				
-					<h:message for="Identifiant" style="color:gold"/>
-									<h:message for="MotdePasse" style="color:gold"/>
-				
+					<h:message for="formulaireConnexion" style="color:gold"/>
 			</div>
 		</h:form>
 
@@ -54,7 +52,7 @@
 	<IMG class="superposebis" id="img_2" src="resources/Aladdin.png"
 		width="100" height="100" />
 
-	<h:messages style="color:gold"></h:messages>
+
 
 	<h:form>
 		<p:commandLink action="#{cliMB.instancierPanierDansSession}">
