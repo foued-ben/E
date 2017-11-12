@@ -20,6 +20,7 @@ import org.springframework.util.Base64Utils;
 
 import com.itextpdf.text.Document;
 import com.itextpdf.text.DocumentException;
+import com.itextpdf.text.Element;
 import com.itextpdf.text.Paragraph;
 import com.itextpdf.text.pdf.PdfPCell;
 import com.itextpdf.text.pdf.PdfPTable;
@@ -139,30 +140,66 @@ public class AdminManagedBean {
 		listeCategorie = (List<Categorie>) FacesContext.getCurrentInstance().getExternalContext().getSessionMap().get("listeCategories");
 		Document document = new Document();
 		try {
-			PdfWriter pdfWriter = PdfWriter.getInstance(document, new FileOutputStream("C:\\Users\\inti0236\\Desktop\\Test.pdf"));
+			PdfWriter pdfWriter = PdfWriter.getInstance(document, new FileOutputStream("C:\\Users\\inti0236\\Desktop\\RécapitulatifInventaire.pdf"));
 			document.open();
 
-			PdfPTable table = new PdfPTable(5);
-			for(int i=0; i<5;i++){
-				
-			}
+//Lister les produits dans le PDF
 			Paragraph header = new Paragraph();
 			header.add("Les produits proposés par le magasin sont : ");
 			document.add(header);
-			header.clear();
-			header.add("Nom Produit" +" | " + "Quantité"+"Prix"+" | "+" | "+"Catégorie");
-			//document.add(table);
-			for (Produit prod :listeProduit){
-				Double prix =prod.getPrix();
-				String prixCarac = prix.toString();
-				Paragraph paragraphe = new Paragraph();
-				paragraphe.add(prod.getDesignation() + " | ");
-				paragraphe.add(prod.getQuantite()+ " | ");
-				paragraphe.add(prixCarac+" €"+" | ");
-				paragraphe.add(prod.getCategorie().getNomCategorie()+ " | ");
+			document.add(new Paragraph("\n"));
 
-				document.add(paragraphe);
+			// Entête du tableau
+			String[] enteteTableau ={"Id","Produit","Description","Quantité","Prix","Catégorie"};
+			PdfPTable table = new PdfPTable(enteteTableau.length);
+			//Création de l'entete du tableau
+
+			for(String caseEntete : enteteTableau){
+				Paragraph celluleEnteteTemp = new Paragraph();
+				celluleEnteteTemp.add(caseEntete);
+				table.addCell(celluleEnteteTemp);
 			}
+			
+			//On ajoute les produits dans la liste
+			for(Produit prod :listeProduit){
+				//Pour chaque produit on stocke les infos dans un tableau d'objet
+				String categorieTemp = String.valueOf(prod.getCategorie().getIdCategorie()) +"/" + prod.getDescription();
+				Object[] tableauAEntrer  ={prod.getIdProduit(),prod.getDesignation(),prod.getDescription(),prod.getQuantite(),prod.getPrix(),categorieTemp};
+				//On ajoute l'info de chaque objet du tableau dans la cellule après toString
+				for(Object objet: tableauAEntrer){
+					Paragraph paraTemp = new Paragraph();
+					paraTemp.add(objet.toString());
+					table.addCell(paraTemp);
+				}
+			}
+			document.add(table);
+
+			header.clear();
+			//Ajouter les catégories dans le PDF
+			header.add("Les catégories regroupant les produits proposés sont :");
+			document.add(header);
+			document.add(new Paragraph("\n"));
+			String[] enteteTableauCategorie ={"ID","Désignation","Description","Nombre de Produits"};
+			PdfPTable tableCategorie = new PdfPTable(enteteTableauCategorie.length);
+
+			//Création de l'entete du tableau
+			for(String entete:enteteTableauCategorie){
+				Paragraph celluleEnteteTemp = new Paragraph();
+				celluleEnteteTemp.add(entete);
+				tableCategorie.addCell(celluleEnteteTemp);
+			}
+			
+			for(Categorie categorie : listeCategorie){
+				String nombreProduit = String.valueOf(categorie.getListeProduits().size());
+				Object[] tableauAEntrer = {categorie.getIdCategorie(),categorie.getNomCategorie(),categorie.getDescription(),categorie.getDescription(),nombreProduit};
+				for(Object objet:tableauAEntrer){
+					Paragraph paraTemp = new Paragraph();
+					paraTemp.add(objet.toString());
+					tableCategorie.addCell(paraTemp);
+				}
+			}
+			
+			document.add(tableCategorie);
 			document.close();
 		} catch (FileNotFoundException | DocumentException e) {
 			System.out.println("Erreur lors de la création du PDF");

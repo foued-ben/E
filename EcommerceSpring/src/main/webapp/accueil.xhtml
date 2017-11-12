@@ -8,18 +8,30 @@
 
 
 <h:head>
-	<title>Page Login</title>
+	<title>Page Accueil</title>
 </h:head>
 
-<h:body>
+<h:body style="background-image :   url(resources/night.jpg); bac ">
 
-	<h:link value="Gestion des Produits" outcome="gestionproduits.xhtml"></h:link>
-	<h:link value="Recherche" outcome="recherche.xhtml"></h:link>
+	<h:form>
+		<p:stack icon="/resources/stack.png" expanded="true">
+
+			<p:menuitem value="Accueil" url="accueil.xhtml" icon="resources/PC.png"/>
+
+			<p:menuitem value="Produits" icon="/resources/BoiteCarton.png"
+				url="gestionproduits.xhtml" />
+			<p:menuitem value="Catégories" icon="/resources/dossier.png"
+				url="categorie.xhtml" />
+			<p:menuitem value="Recherche" icon="resources/Loupe.png" url="recherche.xhtml" />
+			<p:menuitem value="Déconnexion"	icon="/resources/deconnexion.png"
+				action="#{adminMB.deconnexion}"/>
+		</p:stack>
+	</h:form>
 
 
 	<h:form>
 		<h:commandButton value="Se déconnecter"
-			action="#{adminMB.deconnexion}" update="@all"></h:commandButton>
+			action="#{adminMB.deconnexion}"></h:commandButton>
 	</h:form>
 	<h1 style="text-align: center; color: gold">Liste des produits</h1>
 	<p:separator></p:separator>
@@ -55,14 +67,14 @@
 		</p:column>
 
 		<p:column headerText="Illustration">
-			<p:graphicImage value="#{ImageMB.image}" width="150px" >
+			<p:graphicImage value="#{ImageMB.image}" width="150px">
 				<f:param name="idProduit" value="#{produit.idProduit}"></f:param>
 			</p:graphicImage>
 
 
 		</p:column>
-	<p:column headerText="Image DB">
-	</p:column>
+		<p:column headerText="Image DB">
+		</p:column>
 
 		<p:column headerText="Supprimer le produit">
 			<h:form>
@@ -123,7 +135,7 @@
 		Stock : <p:inputText value="#{produitMB.produit.quantite}"
 			required="true" />
 		Catégorie (ID) : <p:inputText value="#{produitMB.idCategorie}"
-			required="true" validator="#{produitMB.verifCategorie}"/>
+			required="true" validator="#{produitMB.verifCategorie}" />
 			
 			Image :
 
@@ -177,20 +189,23 @@
 
 	</p:dataTable>
 
-	<h1 style="text-align: center; position: relative; color: gold">Modifier une catégorie</h1>
-		<h:form>
+	<h1 style="text-align: center; position: relative; color: gold">Modifier
+		une catégorie</h1>
+	<h:form>
 		ID : <h:inputText value="#{categorieMB.categorie.idCategorie}"></h:inputText>
-		Description : <h:inputText value="#{categorieMB.categorie.description}"></h:inputText>
-		Designation : <h:inputText value="#{categorieMB.categorie.nomCategorie}"></h:inputText>
+		Description : <h:inputText
+			value="#{categorieMB.categorie.description}"></h:inputText>
+		Designation : <h:inputText
+			value="#{categorieMB.categorie.nomCategorie}"></h:inputText>
 
 		<h:commandButton value="Modifier"
 			action="#{categorieMB.modifierCategorie}"></h:commandButton>
 	</h:form>
-	
+
 	<h1 style="text-align: center; position: relative; color: gold">PDF</h1>
-	
+
 	<h:form>
-		<h:commandButton value="Ecrire PDF" action="#{adminMB.ecrirePDF}" ></h:commandButton>
+		<h:commandButton value="Ecrire PDF" action="#{adminMB.ecrirePDF}"></h:commandButton>
 	</h:form>
 
 
