@@ -17,7 +17,8 @@ import fr.adaming.modele.Produit;
 import fr.adaming.service.IProduitService;
 
 @ManagedBean(name="ImageMB")
-@ApplicationScoped
+//@ApplicationScoped
+@RequestScoped
 public class ImagesManagedBean {
 
 	@ManagedProperty(value="#{produitService}")

@@ -12,6 +12,7 @@ public class ValidateurTaille implements Validator{
 	@Override
 	public void validate(FacesContext context, UIComponent composant, Object value) throws ValidatorException {
 		
+		
 		if(value==null){
 			throw new ValidatorException(new FacesMessage("Objet nul."));
 

@@ -201,8 +201,12 @@ public class AdminManagedBean {
 			
 			document.add(tableCategorie);
 			document.close();
+			FacesContext.getCurrentInstance().addMessage(null, new FacesMessage("Le PDF contenant l'inventaire a bien été créé."));
+
 		} catch (FileNotFoundException | DocumentException e) {
-			System.out.println("Erreur lors de la création du PDF");
+
+			FacesContext.getCurrentInstance().addMessage(null, new FacesMessage("Le PDF n'a pas pu être créé."));
+
 			e.printStackTrace();
 		}
 	}

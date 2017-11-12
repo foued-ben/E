@@ -4,11 +4,13 @@
 	xmlns:ui="http://java.sun.com/jsf/facelets"
 	xmlns:h="http://java.sun.com/jsf/html"
 	xmlns:f="http://java.sun.com/jsf/core"
-	xmlns:p="http://primefaces.org/ui">
+	xmlns:p="http://primefaces.org/ui" 
+	xmlns:o="http://omnifaces.org/ui"
+	xmlns:of="http://omnifaces.org/functions">
 
 
 <h:head>
-	<title>Page Accueil</title>
+	<title>Accueil Administrateur</title>
 </h:head>
 
 <h:body style="background-image :   url(resources/night.jpg); bac ">
@@ -16,25 +18,27 @@
 	<h:form>
 		<p:stack icon="/resources/stack.png" expanded="true">
 
-			<p:menuitem value="Accueil" url="accueil.xhtml" icon="resources/PC.png"/>
+			<p:menuitem value="Accueil" url="accueil.xhtml"
+				icon="resources/PC.png" />
 
 			<p:menuitem value="Produits" icon="/resources/BoiteCarton.png"
 				url="gestionproduits.xhtml" />
 			<p:menuitem value="Catégories" icon="/resources/dossier.png"
-				url="categorie.xhtml" />
-			<p:menuitem value="Recherche" icon="resources/Loupe.png" url="recherche.xhtml" />
-			<p:menuitem value="Déconnexion"	icon="/resources/deconnexion.png"
-				action="#{adminMB.deconnexion}"/>
+				url="categorieadmin.xhtml" />
+			<p:menuitem value="Recherche" icon="resources/Loupe.png"
+				url="recherche.xhtml" />
+			<p:menuitem value="Enregistrer Stock" icon="/resources/PDF.png"
+				action="#{adminMB.ecrirePDF}" />
+			<p:menuitem value="Déconnexion" icon="/resources/deconnexion.png"
+				action="#{adminMB.deconnexion}" />
+				
 		</p:stack>
 	</h:form>
 
 
-	<h:form>
-		<h:commandButton value="Se déconnecter"
-			action="#{adminMB.deconnexion}"></h:commandButton>
-	</h:form>
+
 	<h1 style="text-align: center; color: gold">Liste des produits</h1>
-	<p:separator></p:separator>
+	<p:separator style="color:gold"></p:separator>
 
 
 	<p:dataTable var="produit" value="#{sessionScope.listeProduits}">
@@ -61,7 +65,6 @@
 		<p:column headerText="Categorie ID/Désignation">
 			<h:outputText value="#{produit.categorie.idCategorie}" />
 			<h:outputText value="/" />
-
 			<h:outputText value="#{produit.categorie.nomCategorie}" />
 
 		</p:column>
@@ -70,10 +73,6 @@
 			<p:graphicImage value="#{ImageMB.image}" width="150px">
 				<f:param name="idProduit" value="#{produit.idProduit}"></f:param>
 			</p:graphicImage>
-
-
-		</p:column>
-		<p:column headerText="Image DB">
 		</p:column>
 
 		<p:column headerText="Supprimer le produit">
@@ -122,91 +121,8 @@
 
 	</p:dataTable>
 
-	<h1 style="text-align: center; position: relative; color: gold">Modifier
-		un produit</h1>
-	<h:form>
-		ID (Produit) :  <p:inputText value="#{produitMB.produit.idProduit}"
-			required="true" />
-						Designation : <p:inputText
-			value="#{produitMB.produit.designation}" required="true" />
-		Description : <p:inputText value="#{produitMB.produit.description}"
-			required="true" />
-		Prix : <p:inputText value="#{produitMB.produit.prix}" required="true" />
-		Stock : <p:inputText value="#{produitMB.produit.quantite}"
-			required="true" />
-		Catégorie (ID) : <p:inputText value="#{produitMB.idCategorie}"
-			required="true" validator="#{produitMB.verifCategorie}" />
-			
-			Image :
-
-		<p:selectOneListbox value="#{produitMB.produit.image}">
-			<f:selectItem itemLabel="Monopoly" itemValue="Monopoly.png" />
-			<f:selectItem itemLabel="Petits Chevaux"
-				itemValue="PetitsChevaux.png" />
-			<f:selectItem itemLabel="Elsa" itemValue="Elsa.png" />
-		</p:selectOneListbox>
 
 
-		<h:commandButton value="Remplacer"
-			action="#{produitMB.modifierProduit}"></h:commandButton>
-	</h:form>
-
-	<h1 style="text-align: center; position: relative; color: gold">Ajouter
-		une catégorie</h1>
-	<h:form>
-					Description de la catégorie: <p:inputText
-			value="#{categorieMB.categorie.description}" required="true" />
-
-			Nom de la catégorie: <p:inputText
-			value="#{categorieMB.categorie.nomCategorie}" required="true" />
-		<h:commandButton value="Ajouter la catégorie"
-			action="#{categorieMB.ajouterCategorie}" />
-
-
-	</h:form>
-	<h1 style="text-align: center; position: relative; color: gold">Rechercher
-		une catégorie</h1>
-	<h:form>
-		<h:inputText value="#{categorieMB.categorie.idCategorie}"></h:inputText>
-
-		<h:commandButton value="Rechercher"
-			action="#{categorieMB.rechercheCategorieParId}"></h:commandButton>
-	</h:form>
-
-	<p:dataTable var="categorie" value="#{categorieMB.categorie}">
-		<p:column headerText="Id">
-			<h:outputText value="#{categorie.idCategorie}" />
-		</p:column>
-
-		<p:column headerText="Désignation">
-			<h:outputText value="#{categorie.nomCategorie}" />
-		</p:column>
-
-		<p:column headerText="Description">
-			<h:outputText value="#{categorie.description}" />
-		</p:column>
-
-
-	</p:dataTable>
-
-	<h1 style="text-align: center; position: relative; color: gold">Modifier
-		une catégorie</h1>
-	<h:form>
-		ID : <h:inputText value="#{categorieMB.categorie.idCategorie}"></h:inputText>
-		Description : <h:inputText
-			value="#{categorieMB.categorie.description}"></h:inputText>
-		Designation : <h:inputText
-			value="#{categorieMB.categorie.nomCategorie}"></h:inputText>
-
-		<h:commandButton value="Modifier"
-			action="#{categorieMB.modifierCategorie}"></h:commandButton>
-	</h:form>
-
-	<h1 style="text-align: center; position: relative; color: gold">PDF</h1>
-
-	<h:form>
-		<h:commandButton value="Ecrire PDF" action="#{adminMB.ecrirePDF}"></h:commandButton>
-	</h:form>
 
 
 

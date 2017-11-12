@@ -27,6 +27,7 @@ public class Categorie {
 	
 	//Association avec la liste de produits
 	@OneToMany(mappedBy="categorie",fetch=FetchType.EAGER)
+	//@OneToMany(mappedBy="categorie")
 	private List<Produit> listeProduits;
 	
 	public Categorie() {
