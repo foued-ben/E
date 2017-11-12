@@ -15,7 +15,7 @@
 
 	<h:outputStylesheet library="css" name="style.css" />
 	<div class="container">
-		<img width="1350" height="400" src="resources/fondroilion.jpg" />
+		<img width="1350" height="400" src="resources/roirecap.jpg" />
 		<div class="caption">
 			<h1 style="color: gold;">Disney Store</h1>
 		</div>
@@ -38,7 +38,7 @@
 	<h1 style="color: gold; text-align: center">Récapitulatif de la
 		commande</h1>
 
-	<h2 style="color: green; text-align: center">Client</h2>
+	<h2 style="color: gold; text-align: center">Client</h2>
 
 	<p:dataTable var="cl" value="#{cliMB.client}">
 		<p:column headerText="Id">
@@ -93,8 +93,11 @@
 	<p:spacer height="50px" />
 	
 	Prix Total  : <h:outputText value="#{cliMB.prixTot}" />
-
-
+	<p:spacer height="50px" />
+	
+	<h:form>
+	 <p:commandButton value="Payer" icon="ui-icon-check"  action="#{cliMB.ecrirePDF}"/>
+	</h:form>
 
 
 	<p:separator />

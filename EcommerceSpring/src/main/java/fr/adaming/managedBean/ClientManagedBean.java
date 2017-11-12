@@ -1,5 +1,7 @@
 package fr.adaming.managedBean;
 
+import java.io.FileNotFoundException;
+import java.io.FileOutputStream;
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Date;
@@ -10,8 +12,16 @@ import javax.faces.application.FacesMessage;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.ManagedProperty;
 import javax.faces.bean.RequestScoped;
+import javax.faces.component.UIComponent;
 import javax.faces.context.FacesContext;
+import javax.faces.validator.ValidatorException;
 import javax.servlet.http.HttpSession;
+
+import com.itextpdf.text.Document;
+import com.itextpdf.text.DocumentException;
+import com.itextpdf.text.Paragraph;
+import com.itextpdf.text.pdf.PdfPTable;
+import com.itextpdf.text.pdf.PdfWriter;
 
 import fr.adaming.modele.Administrateur;
 import fr.adaming.modele.Categorie;
@@ -529,6 +539,124 @@ public class ClientManagedBean implements Serializable {
 			System.out.println(produitTemp);
 		}
 		return "enregistrementclient";
+	}
+	
+	public void validerPass(FacesContext context, UIComponent composant, Object value)
+			throws ValidatorException {		
+		String saisie= (String) value ; 
+		boolean valide = false ; 
+		for (int i = 0; i < saisie.length(); i++) {
+			if(saisie.charAt(i) == '@'){
+				valide = true ; 
+			}
+		}
+		
+		if(!valide){
+			throw new ValidatorException(new FacesMessage("Le mail doit contenir un @"));
+
+		}
+	
+	}
+	
+	public void validerTel(FacesContext context, UIComponent composant, Object value)
+			throws ValidatorException {		
+		String saisie= (String) value ; 
+		boolean valide = false ; 
+		
+		
+		if( saisie.length()== 10){
+			valide = true ; 
+		}
+		
+		
+		for (int i = 0; i < saisie.length(); i++) {
+			if(saisie.charAt(i) != '0' && saisie.charAt(i) != '1' && saisie.charAt(i) != '2' && saisie.charAt(i) != '3' && saisie.charAt(i) != '4' && saisie.charAt(i) != '5' && saisie.charAt(i) != '6' && saisie.charAt(i) != '7' && saisie.charAt(i) != '8' && saisie.charAt(i) != '9'){
+				valide = false ; 
+			}
+		}
+		
+		
+		if(!valide){
+			throw new ValidatorException(new FacesMessage("Le numéro de téléphone doit comporter 10 chiffres"));
+
+		}
+	
+	}
+	
+	
+	public void ecrirePDF(){
+		//On récupère les informations sur les produits depuis la session.
+		// On récupère le client portant l'id donné
+		Client clientTemp = clientService.enregitrementClient(client);
+		this.client = clientTemp;
+		System.out.println(clientTemp);
+		// On récupère la liste des commandes
+		Panier panier = (Panier) maSession.getAttribute("panierSession");
+		List<LigneCommande> listeCommande = panier.getListeLignesCommande();
+		System.out.println(listeCommande);
+		// Calcul du prix
+		double prix = 0;
+
+		for (LigneCommande commande : listeCommande) {
+			System.out.println(commande.getPrix());
+			prix = prix + commande.getPrix();
+		}
+		
+		// déclaration d'un document de type Document
+		Document document = new Document();
+		try {
+			PdfWriter pdfWriter = PdfWriter.getInstance(document, new FileOutputStream("C:\\Users\\inti0241\\Documents\\Commandes\\Test.pdf"));
+			document.open();
+
+			PdfPTable table = new PdfPTable(5);
+			for(int i=0; i<5;i++){
+				
+			}
+			
+			Paragraph head = new Paragraph();
+			head.add("Récapitulatif de votre commande : ");
+			document.add(head);
+			head.clear();
+			head.add("M./Mme." + clientTemp.getNomClient());
+			document.add(head);
+			head.clear();
+			head.add("Adresse : " + clientTemp.getAdresse());
+			document.add(head);
+			head.clear();
+			head.add("EMail : " + clientTemp.getEmail());
+			document.add(head);
+			head.clear();
+			head.add("Téléphone : " + clientTemp.getTel());
+			document.add(head);
+			head.clear();
+
+			
+			Paragraph header = new Paragraph();
+			header.add("Les produits sélectionnés sont : ");
+			document.add(header);
+			header.clear();
+			header.add("Nom Produit" +" | " + "Quantité"+"Prix"+" | "+" | "+"Catégorie");
+			//document.add(table);
+			for (LigneCommande com :listeCommande){
+				Double prixprod = com.getProduit().getPrix();
+				String prixCarac = prixprod.toString();
+				Paragraph paragraphe = new Paragraph();
+				paragraphe.add(com.getProduit().getDesignation() + " | ");
+				paragraphe.add(com.getProduit().getQuantite()+ " | ");
+				paragraphe.add(prixCarac+" €"+" | ");
+				paragraphe.add(com.getProduit().getCategorie().getNomCategorie()+ " | ");
+
+				document.add(paragraphe);
+			}
+			
+			head.add("Prix Total : " + prix + " €");
+			document.add(head);
+			head.clear();
+			document.close();
+		} catch (FileNotFoundException | DocumentException e) {
+			System.out.println("Erreur lors de la création du PDF");
+			e.printStackTrace();
+		}
 	}
 	
 }

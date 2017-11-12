@@ -96,11 +96,11 @@
 				<p:inputMask id="adresseID" value="#{cliMB.client.adresse}" />
 
 				<p:outputLabel for="emailID" value="Email:" />
-				<p:inputMask id="emailID" value="#{cliMB.client.email}" />
+				<p:inputMask id="emailID" value="#{cliMB.client.email}" validator="#{cliMB.validerPass}" />
 
 
 				<p:outputLabel for="telID" value="Téléphone:" />
-				<p:inputMask id="telID" value="#{cliMB.client.tel}" />
+				<p:inputMask id="telID" value="#{cliMB.client.tel}" validator="#{cliMB.validerTel}" />
 			</h:panelGrid>
 	</div>
 			<p:commandButton value="Enregistrer la commande" type="submit"

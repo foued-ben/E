@@ -138,11 +138,11 @@ public class ClientDaoImpl implements IClientDao{
 	@Override
 	public Client recuperClient(Client c) {
 		Session s = sf.getCurrentSession() ; 
-		String req ="SELECT client from Client client WHERE client.idClient=:pIDClient AND client.codePerso=:pCodePerso";
+		String req ="SELECT client from Client client WHERE client.idClient=:pIDClient";
 		Query query = s.createQuery(req) ; 
 		System.out.println("requête créée");
 		query.setParameter("pIDClient",c.getIdClient());
-		query.setParameter("pCodePerso", c.getCodePerso());
+	//	query.setParameter("pCodePerso", c.getCodePerso());
 		Client clientChercher = (Client) query.uniqueResult();
 
 		return clientChercher;
