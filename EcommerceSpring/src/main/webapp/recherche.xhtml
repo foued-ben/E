@@ -8,23 +8,61 @@
 
 
 <h:head>
-	<title>Page Login</title>
+	<title>Rechercher</title>
 </h:head>
 
-<h:body>
-
-
-	<h1 style="text-align: center; position: relative; color: gold">Rechercher
-		un produit</h1>
+<h:body style="background-image :   url(resources/night.jpg); bac ">
 
 	<h:form>
-		ID :<h:inputText value="#{produitMB.produit.idProduit}"></h:inputText>
-		<h:commandButton value="Recherche"
-			action="#{produitMB.rechercheProduitParId}"></h:commandButton>
+		<p:stack icon="/resources/stack.png" expanded="true">
+
+			<p:menuitem value="Accueil" url="accueil.xhtml"
+				icon="resources/PC.png" />
+
+			<p:menuitem value="Produits" icon="/resources/BoiteCarton.png"
+				url="gestionproduits.xhtml" />
+			<p:menuitem value="Catégories" icon="/resources/dossier.png"
+				url="categorieadmin.xhtml" />
+			<p:menuitem value="Recherche" icon="resources/Loupe.png"
+				url="recherche.xhtml" />
+			<p:menuitem value="Enregistrer Stock" icon="/resources/PDF.png"
+				action="#{adminMB.ecrirePDF}" />
+			<p:menuitem value="Déconnexion" icon="/resources/deconnexion.png"
+				action="#{adminMB.deconnexion}" />
+				
+		</p:stack>
 	</h:form>
 
+<p:panelGrid columns="2" >
+
+	<h:form>
+		<h1 style="text-align: center; position: relative; color: gold; background-image :   url(resources/night.jpg)">Rechercher
+		un produit</h1>
+		<p:panelGrid columns="2">
+		<p:outputLabel for="IDProduit" value="Id du produit"></p:outputLabel>
+		<h:inputText value="#{produitMB.produit.idProduit}" id="IDProduit"></h:inputText>
+		</p:panelGrid>
+		<h:commandButton value="Recherche"
+			action="#{produitMB.rechercheProduitParId}"></h:commandButton>
+			
+	</h:form>
+
+	<h:form>
+		<h1 style="text-align: center; position: relative; color: gold; background-image :   url(resources/night.jpg)">Rechercher
+		une catégorie</h1>
+			<p:outputLabel for="IDCategorie" value="Id de la catégorie"></p:outputLabel>
+	
+		<h:inputText value="#{categorieMB.categorie.idCategorie}" id="IDCategorie"></h:inputText>
+
+		<h:commandButton value="Rechercher"
+			action="#{categorieMB.rechercheCategorieParId}"></h:commandButton>
+	</h:form>
+
+</p:panelGrid>
+
+
 	<h1 style="text-align: center; position: relative; color: gold">Résultat
-		de la recherche</h1>
+		de la recherche de produit</h1>
 
 
 	<p:dataTable var="produit" value="#{produitMB.produit}">
@@ -58,17 +96,29 @@
 
 		</p:column>
 
-		<p:column headerText="Illustration">
-			<p:graphicImage name="/#{produit.image}" width="175px" />
-
-
-		</p:column>
 
 
 	</p:dataTable>
 
+	<h1 style="text-align: center; position: relative; color: gold">Résultat
+		de la recherche de catégorie</h1>
 
 
+	<p:dataTable var="categorie" value="#{categorieMB.categorie}">
+		<p:column headerText="Id">
+			<h:outputText value="#{categorie.idCategorie}" />
+		</p:column>
+
+		<p:column headerText="Désignation">
+			<h:outputText value="#{categorie.nomCategorie}" />
+		</p:column>
+
+		<p:column headerText="Description">
+			<h:outputText value="#{categorie.description}" />
+		</p:column>
+
+
+	</p:dataTable>
 
 
 

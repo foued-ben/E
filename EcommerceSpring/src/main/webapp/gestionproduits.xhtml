@@ -11,59 +11,127 @@
 	<title>Gestion des produits</title>
 </h:head>
 
-<h:body>
+<h:body style="background-image :   url(resources/night.jpg); bac ">
+
+	<h:form>
+		<p:stack icon="/resources/stack.png" expanded="true">
+
+			<p:menuitem value="Accueil" url="accueil.xhtml"
+				icon="resources/PC.png" />
+
+			<p:menuitem value="Produits" icon="/resources/BoiteCarton.png"
+				url="gestionproduits.xhtml" />
+			<p:menuitem value="Catégories" icon="/resources/dossier.png"
+				url="categorieadmin.xhtml" />
+			<p:menuitem value="Recherche" icon="resources/Loupe.png"
+				url="recherche.xhtml" />
+			<p:menuitem value="Enregistrer Stock" icon="/resources/PDF.png"
+				action="#{adminMB.ecrirePDF}" update="@all"/>
+			<p:menuitem value="Déconnexion" icon="/resources/deconnexion.png"
+				action="#{adminMB.deconnexion}" />
+				
+		</p:stack>
+	</h:form>
 
 
-	
-	<h1 style="text-align: center; position: relative; color: gold">Ajouter
-		un produit</h1>
 
-	<h:form enctype="multipart/form-data">
-	<p:panelGrid columns="3">
-				Designation : <p:inputText value="#{produitMB.produit.designation}"
-			required="true" id="designation">
-				<f:validator validatorId="Taillemini"></f:validator>
-			</p:inputText> 						
+	<p:panelGrid columns="2">
+
+
+		<h:form enctype="multipart/form-data">
+			<div style="color: gold background-image :   url(resources/night.jpg)">
+				<h1 style="text-align: center; position: relative; color: gold; background-image :   url(resources/night.jpg)">Ajouter un
+					produit</h1>
+			</div>
+			<p:panelGrid columns="3">
+
+				<p:outputLabel for="designation" value="Designation :" />
+
+				<p:inputText value="#{produitMB.produit.designation}"
+					required="true" id="designation">
+					<f:validator validatorId="Taillemini"></f:validator>
+				</p:inputText>
 				<p:message for="designation"></p:message>
-			
-		Description : <p:inputText value="#{produitMB.produit.description}"
-			required="true" id="description"/> 	
-			<p:message for="description"></p:message>
-			
-		Prix : <p:inputText value="#{produitMB.produit.prix}" required="true" id="prix"> 	
-			<f:validator validatorId="verifPrix"></f:validator>
-		</p:inputText>						
-		<p:message for="prix"></p:message>
-		
-		Stock : <p:inputText value="#{produitMB.produit.quantite}" id="stock" validator="#{produitMB.validationStock}">
-		
-			</p:inputText>
-			<p:message for="stock"></p:message>
-			
-		Catégorie (ID) : <p:inputText value="#{produitMB.idCategorie}" required="true" validator="#{produitMB.verifCategorie}" id="categorie"/>
-							<p:message for="categorie"></p:message>
-		
-		Image : <p:fileUpload value="#{produitMB.imageFichier}" mode="simple" skinSimple="true"></p:fileUpload>
 
-		<h:commandButton value="Ajouter" action="#{produitMB.ajouterProduit}"></h:commandButton>
+				<p:outputLabel for="description" value="Description :" />
+
+				<p:inputText value="#{produitMB.produit.description}"
+					required="true" id="description" />
+				<p:message for="description"></p:message>
+
+				<p:outputLabel for="prix" value="Prix :" />
+
+				<p:inputText value="#{produitMB.produit.prix}" required="true"
+					id="prix">
+					<f:validator validatorId="verifPrix"></f:validator>
+				</p:inputText>
+				<p:message for="prix"></p:message>
+
+				<p:outputLabel for="stock" value="Stock :" />
+				<p:inputText value="#{produitMB.produit.quantite}" id="stock"
+					validator="#{produitMB.validationStock}">
+
+				</p:inputText>
+				<p:message for="stock"></p:message>
+				<p:outputLabel for="categorie" value="Catégorie (ID) :" />
+
+				<p:inputText value="#{produitMB.idCategorie}" required="true"
+					validator="#{produitMB.verifCategorie}" id="categorie" />
+				<p:message for="categorie"></p:message>
+				<p:outputLabel for="image" value="Image" />
+
+				<p:fileUpload value="#{produitMB.imageFichier}" mode="simple"
+					skinSimple="true" id="image"></p:fileUpload>
+
+				<h:commandButton value="Ajouter"
+					action="#{produitMB.ajouterProduit}"></h:commandButton>
 			</p:panelGrid>
-		
-	<p:growl sticky="true"></p:growl>
-	</h:form>
 
-
-	<h1 style="text-align: center; position: relative; color: gold">Ajouter une image à un produit</h1>
-	
-	<h:form enctype="multipart/form-data">
-		ID de produit : <h:inputText value="#{produitMB.produit.idProduit}"></h:inputText>
-		<p:fileUpload value="#{produitMB.imageFichier}" mode="simple" skinSimple="true"></p:fileUpload>
-		<h:commandButton value="Envoyer l'image" ajax="false" actionListener="#{produitMB.associationImageProduit}"></h:commandButton>
-		<h:graphicImage value="image." alt="Image à envoyer" url="/image"></h:graphicImage>
-	</h:form>
+			<p:growl sticky="true"></p:growl>
+		</h:form>
 
 
 
 
+
+
+		<h:form>
+			<h1 style="text-align: center; position: relative; color: gold; background-image :   url(resources/night.jpg)">Modifier
+				un produit</h1>
+
+			<p:panelGrid columns="2">
+				<p:outputLabel for="idProduit" value="ID (Produit) :" />
+				<p:inputText value="#{produitMB.produit.idProduit}" required="true"
+					id="idProduit" />
+
+				<p:outputLabel for="designationModif" value="Designation :" />
+				<p:inputText value="#{produitMB.produit.designation}"
+					required="true" id="designationModif" />
+
+				<p:outputLabel for="descriptionModif" value="Description :" />
+				<p:inputText value="#{produitMB.produit.description}"
+					required="true" id="descriptionModif" />
+
+				<p:outputLabel for="prixModif" value="Prix :" />
+
+				<p:inputText value="#{produitMB.produit.prix}" required="true"
+					id="prixModif" />
+				<p:outputLabel for="stockModif" value="Stock :" />
+				<p:inputText value="#{produitMB.produit.quantite}" required="true"
+					id="stockModif" />
+				<p:outputLabel for="categorieModif" value="Categorie (ID)"></p:outputLabel>
+				<p:inputText value="#{produitMB.idCategorie}" required="true"
+					validator="#{produitMB.verifCategorie}" id="categorieModif" />
+
+			</p:panelGrid>
+			<h:commandButton value="Remplacer"
+				action="#{produitMB.modifierProduit}"></h:commandButton>
+		</h:form>
+
+	</p:panelGrid>
+
+<br/>
+<h1 style="text-align: center; position: relative; color: gold">Catégories de produits</h1>
 	<p:dataTable var="categorie" value="#{sessionScope.listeCategories}">
 
 		<p:column headerText="Id">
@@ -79,6 +147,7 @@
 		</p:column>
 	</p:dataTable>
 
+<p:growl></p:growl>
 
 </h:body>
 </html>

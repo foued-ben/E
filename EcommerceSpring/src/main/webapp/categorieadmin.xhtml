@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:p="http://primefaces.org/ui">
+
+
+<h:head>
+	<title>Gestion des catégories</title>
+</h:head>
+
+<h:body style="background-image :   url(resources/night.jpg); bac ">
+
+<h1 style="color:gold">Gestion des catégories</h1>
+
+	<h:form>
+		<p:stack icon="/resources/stack.png" expanded="true">
+
+			<p:menuitem value="Accueil" url="accueil.xhtml"
+				icon="resources/PC.png" />
+
+			<p:menuitem value="Produits" icon="/resources/BoiteCarton.png"
+				url="gestionproduits.xhtml" />
+			<p:menuitem value="Catégories" icon="/resources/dossier.png"
+				url="categorieadmin.xhtml" />
+			<p:menuitem value="Recherche" icon="resources/Loupe.png"
+				url="recherche.xhtml" />
+			<p:menuitem value="Enregistrer Stock" icon="/resources/PDF.png"
+				action="#{adminMB.ecrirePDF}" />
+			<p:menuitem value="Déconnexion" icon="/resources/deconnexion.png"
+				action="#{adminMB.deconnexion}" />
+				
+		</p:stack>
+	</h:form>
+
+
+
+<p:panelGrid columns="2">
+	<h:form>
+		<h1 style="text-align: center; position: relative; color: gold; background-image :   url(resources/night.jpg)">Ajouter
+		une catégorie</h1>
+		<p:panelGrid columns="2">
+					Description de la catégorie: <p:inputText
+			value="#{categorieMB.categorie.description}" required="true" />
+
+			Nom de la catégorie: <p:inputText
+			value="#{categorieMB.categorie.nomCategorie}" required="true" />
+			</p:panelGrid>
+		<h:commandButton  value="Ajouter la catégorie"
+			action="#{categorieMB.ajouterCategorie}" />
+
+
+	</h:form>
+	
+	<h:form>
+			<h1 style="text-align: center; position: relative; color: gold; background-image :   url(resources/night.jpg)">Modifier
+		une catégorie</h1>
+	<p:panelGrid columns="2">
+				<p:outputLabel for="idModif" value="ID :"></p:outputLabel>
+		 <h:inputText value="#{categorieMB.categorie.idCategorie}" id="idModif"></h:inputText>
+				<p:outputLabel for="descriptionModif" value="Description : "></p:outputLabel>
+		
+		<h:inputText
+			value="#{categorieMB.categorie.description}" id="descriptionModif"></h:inputText>
+				<p:outputLabel for="designationModif" value="Designation : "></p:outputLabel>
+			
+		<h:inputText
+			value="#{categorieMB.categorie.nomCategorie}" id="designationModif"></h:inputText>
+
+		<h:commandButton value="Modifier"
+			action="#{categorieMB.modifierCategorie}"></h:commandButton>
+			</p:panelGrid>
+	</h:form>
+
+</p:panelGrid>
+
+	
+
+
+
+</h:body>
+</html>

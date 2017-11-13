@@ -1,5 +1,6 @@
 package fr.adaming.managedBean;
 
+import java.awt.image.ImageFilter;
 import java.util.List;
 
 import javax.faces.application.FacesMessage;
@@ -112,6 +113,20 @@ public class ProduitManagedBean {
 		Categorie categorieTemp = new Categorie();
 		categorieTemp.setIdCategorie(this.idCategorie);
 		this.produit.setCategorie(categorieTemp);
+		//Gestion de l'image.
+		if(imageFichier== null){
+			System.out.println("L'image va rester la même");
+			System.out.println("Pas d'image ajoutée");
+			Produit produitTemp = serviceProduit.rechercherProduitAvecId(this.produit);
+			// L'image stockée avant devient l'image actuel.
+			this.produit.setImageFichier(produitTemp.getImageFichier());
+		}else {
+			System.out.println("Il faut traiter l'image");
+			byte[] image = imageFichier.getContents();
+			this.produit.setImageFichier(image);
+		}
+	
+		
 		//Appel de la méthode
 		Produit produitModif = serviceProduit.modifierProduit(this.produit);
 		if(produitModif!=null){
@@ -127,29 +142,33 @@ public class ProduitManagedBean {
 	
 	public String associationImageProduit(){
 		//On appelle la méthode
+		System.out.println("On ajoute l'image transformé dans le produit");
 		this.produit.setImageFichier(imageFichier.getContents());
 		int verif =serviceProduit.assoicierImageProduit(this.produit);
 		if(verif==1){
 			System.out.println("Ca a marché");
+			return "accueil";
+
 		}else{
 			System.out.println("Erreur d'ajout de l'image");
+			return"gestionproduits";
 		}
-		return "accueil";
 	}
 	
 	public void verifCategorie(FacesContext context, UIComponent composant, Object value) throws ValidatorException{
 		// On récupère la liste des catégories
+		int saisie = (int) value;
 		 int verif =0;
 		List<Categorie> listeCategorie = (List<Categorie>) FacesContext.getCurrentInstance().getExternalContext().getSessionMap().get("listeCategories");
 		for(Categorie categorie:listeCategorie){
-			if(categorie.getIdCategorie()==idCategorie){
+			if(categorie.getIdCategorie()==saisie){
 				verif =verif+1;
 			}
 		}
 		if(verif ==0){
 			
-			//FacesContext.getCurrentInstance().addMessage(null, new FacesMessage());
-			throw new ValidatorException(new FacesMessage("Catégorie non existante. Veuillez choisir une catégorie qui existe."));
+
+			throw new ValidatorException(new FacesMessage("Catégorie non existante. Veuillez choisir une catégorie qui existe." +idCategorie));
 
 		}
 	}

@@ -4,12 +4,16 @@ import java.util.List;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
 import javax.persistence.Transient;
+
+import org.hibernate.annotations.Fetch;
+import org.hibernate.annotations.FetchMode;
 
 @Entity
 @Table(name="categories")
@@ -22,7 +26,8 @@ public class Categorie {
 	private String description;
 	
 	//Association avec la liste de produits
-	@OneToMany(mappedBy="categorie")
+	@OneToMany(mappedBy="categorie",fetch=FetchType.EAGER)
+	//@OneToMany(mappedBy="categorie")
 	private List<Produit> listeProduits;
 	
 	public Categorie() {
