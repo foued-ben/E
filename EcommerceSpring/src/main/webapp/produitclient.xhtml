@@ -41,7 +41,10 @@
 
 
 	<h:form>
-				<div style="color:white"> Rechercher un produit :<h:inputText value="#{cliMB.mot}" /></div>
+		<div style="color: white">
+			Rechercher un produit :
+			<h:inputText value="#{cliMB.mot}" />
+		</div>
 
 		<p:commandButton value="Lancer la recherche"
 			action="#{cliMB.rechProdByName}" styleClass="ui-priority-primary"
@@ -72,6 +75,13 @@
 		<p:column headerText="Prix (€)">
 			<h:outputText value="#{prod.prix}" />
 		</p:column>
+		
+		<p:column headerText="Illustration">
+			<p:graphicImage value="#{ImageMB.image}" width="150px">
+				<f:param name="idProduit" value="#{produit.idProduit}"></f:param>
+			</p:graphicImage>
+		</p:column>
+
 
 		<p:column headerText="Commander">
 			<h:form>
@@ -98,12 +108,12 @@
 
 	<p:spacer height="100px" />
 	<p:separator />
-	
-	<IMG class="superpose" id="img_rdn" src="resources/PersoRDN.png" width="300"
-				height="300" />
-	
-	<IMG class="superpose" id="img_elsa" src="resources/Elsa.png" width="300"
-				height="300" />
-	
+
+	<IMG class="superpose" id="img_rdn" src="resources/PersoRDN.png"
+		width="300" height="300" />
+
+	<IMG class="superpose" id="img_elsa" src="resources/Elsa.png"
+		width="300" height="300" />
+
 </h:body>
 </html>
