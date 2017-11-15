@@ -21,6 +21,7 @@ import com.itextpdf.text.Document;
 import com.itextpdf.text.DocumentException;
 import com.itextpdf.text.Paragraph;
 import com.itextpdf.text.pdf.PdfPTable;
+
 import com.itextpdf.text.pdf.PdfWriter;
 
 import fr.adaming.modele.Administrateur;
@@ -524,6 +525,9 @@ public class ClientManagedBean implements Serializable {
 		commandeTemp.setClient(this.client);
 		// On enregistre la commande dans la base
 		clientService.enregistrementCommande(commandeTemp);
+		//On ajoute le client à la session
+		FacesContext.getCurrentInstance().getExternalContext().getSessionMap().put("Client", this.client);
+		
 
 		// Gestion du stock.
 		for (LigneCommande ligne : listeCommande) {
@@ -587,7 +591,7 @@ public class ClientManagedBean implements Serializable {
 	public void ecrirePDF(){
 		//On récupère les informations sur les produits depuis la session.
 		// On récupère le client portant l'id donné
-		Client clientTemp = clientService.enregitrementClient(client);
+		Client clientTemp = (Client) FacesContext.getCurrentInstance().getExternalContext().getSessionMap().get("Client");
 		this.client = clientTemp;
 		System.out.println(clientTemp);
 		// On récupère la liste des commandes
